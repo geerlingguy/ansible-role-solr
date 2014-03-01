@@ -1,0 +1,7 @@
+---
+workspace: /root
+solr_version: "3.6.2"
+solr_path: /opt/solr
+# The first core in the list will be set as the default Solr core.
+solr_cores:
+  - example-core

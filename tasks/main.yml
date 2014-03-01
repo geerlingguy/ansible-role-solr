@@ -1,0 +1,47 @@
+---
+- name: Download Solr.
+  get_url: >
+    url=http://archive.apache.org/dist/lucene/solr/{{ solr_version }}/apache-solr-{{ solr_version }}.tgz
+    dest={{ workspace }}/apache-solr-{{ solr_version }}.tgz
+    force=no
+
+- name: Expand Solr.
+  command: >
+    tar -C {{ workspace }} -xvzf {{ workspace }}/apache-solr-{{ solr_version }}.tgz
+    creates={{ workspace }}/apache-solr-{{ solr_version }}/dist/apache-solr-{{ solr_version }}.war
+
+- name: Copy Solr into place.
+  command: >
+    cp -r {{ workspace }}/apache-solr-{{ solr_version }} {{ solr_path }}
+    creates={{ solr_path }}/dist/apache-solr-{{ solr_version }}.war
+
+- name: Copy Solr war file into place.
+  command: >
+    cp {{ solr_path }}/dist/apache-solr-{{ solr_version }}.war {{ solr_path }}/solr.war
+    creates={{ solr_path }}/solr.war
+  notify: restart tomcat
+
+- name: Copy solr.xml into Tomcat.
+  template: src=Catalina/solr.xml.j2 dest=/etc/tomcat6/Catalina/localhost/solr.xml owner=tomcat group=tomcat mode=0755
+  notify: restart tomcat
+
+- name: Copy Solr multicore files into place.
+  copy: src=cores.tar.gz dest={{ solr_path }}/cores.tar.gz owner=tomcat group=tomcat mode=0755
+
+- name: Expand Solr multicore files.
+  command: >
+    tar -C {{ solr_path }} -xvzf {{ solr_path }}/cores.tar.gz
+    creates={{ solr_path }}/cores/README.txt
+  notify: restart tomcat
+
+- name: Check if solr.xml file exists.
+  stat: path={{ solr_path }}/solr.xml
+  register: solr_file
+
+- name: Copy Solr core XML file into place.
+  template: src=solr.xml.j2 dest={{ solr_path }}/solr.xml owner=tomcat group=tomcat mode=0755 backup=yes
+  when: solr_file.stat.exists == false
+  notify: restart tomcat
+
+- name: Fix file permissions.
+  file: path={{ solr_path }} state=directory owner=tomcat group=tomcat mode=0755 recurse=yes
