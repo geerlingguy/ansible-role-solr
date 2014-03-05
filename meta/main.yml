@@ -1,6 +1,6 @@
 ---
 dependencies:
-  - { role: tomcat6 }
+  - { role: geerlingguy.tomcat6 }
 
 galaxy_info:
   author: geerlingguy
