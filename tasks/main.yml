@@ -22,7 +22,7 @@
   notify: restart tomcat
 
 - name: Copy solr.xml into Tomcat.
-  template: src=Catalina/solr.xml.j2 dest=/etc/tomcat6/Catalina/localhost/solr.xml owner=tomcat group=tomcat mode=0755
+  template: src=Catalina/solr.xml.j2 dest=/etc/tomcat6/Catalina/{{ tomcat6_hostname }}/solr.xml owner=tomcat group=tomcat mode=0755
   notify: restart tomcat
 
 - name: Copy Solr multicore files into place.
