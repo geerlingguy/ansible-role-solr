@@ -1,6 +1,6 @@
 # Ansible Role: Apache Solr
 
-An Ansible Role that installs Apache Solr (running under Tomcat 6) on RedHat Enterprise Linux or CentOS 6.x servers.
+An Ansible Role that installs Apache Solr (running under Tomcat 6) on RHEL/CentOS 6.x and Debian/Ubuntu.
 
 ## Requirements
 

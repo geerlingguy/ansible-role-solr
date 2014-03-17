@@ -4,13 +4,19 @@ dependencies:
 
 galaxy_info:
   author: geerlingguy
-  description: Apache Solr for RHEL/CentOS 6.x.
+  description: Apache Solr for RHEL/CentOS and Ubuntu.
   company: "Midwestern Mac, LLC"
   license: "license (BSD, MIT)"
   min_ansible_version: 1.4
   platforms:
   - name: EL
     versions:
-      - 6
+    - 6
+  - name: Debian
+    versions:
+    - all
+  - name: Ubuntu
+    versions:
+    - all
   categories:
     - development
