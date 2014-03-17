@@ -1,4 +1,7 @@
 ---
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+
 - name: Download Solr.
   get_url: >
     url=http://archive.apache.org/dist/lucene/solr/{{ solr_version }}/apache-solr-{{ solr_version }}.tgz
@@ -22,11 +25,11 @@
   notify: restart tomcat
 
 - name: Copy solr.xml into Tomcat.
-  template: src=Catalina/solr.xml.j2 dest=/etc/tomcat6/Catalina/{{ tomcat6_hostname }}/solr.xml owner=tomcat group=tomcat mode=0755
+  template: src=Catalina/solr.xml.j2 dest=/etc/tomcat6/Catalina/{{ tomcat6_hostname }}/solr.xml owner={{ tomcat_user }} group={{ tomcat_user }} mode=0755
   notify: restart tomcat
 
 - name: Copy Solr multicore files into place.
-  copy: src=cores.tar.gz dest={{ solr_path }}/cores.tar.gz owner=tomcat group=tomcat mode=0755
+  copy: src=cores.tar.gz dest={{ solr_path }}/cores.tar.gz owner={{ tomcat_user }} group={{ tomcat_user }} mode=0755
 
 - name: Expand Solr multicore files.
   command: >
@@ -39,9 +42,9 @@
   register: solr_file
 
 - name: Copy Solr core XML file into place.
-  template: src=solr.xml.j2 dest={{ solr_path }}/solr.xml owner=tomcat group=tomcat mode=0755 backup=yes
+  template: src=solr.xml.j2 dest={{ solr_path }}/solr.xml owner={{ tomcat_user }} group={{ tomcat_user }} mode=0755 backup=yes
   when: solr_file.stat.exists == false
   notify: restart tomcat
 
 - name: Fix file permissions.
-  file: path={{ solr_path }} state=directory owner=tomcat group=tomcat mode=0755 recurse=yes
+  file: path={{ solr_path }} state=directory owner={{ tomcat_user }} group={{ tomcat_user }} mode=0755 recurse=yes
