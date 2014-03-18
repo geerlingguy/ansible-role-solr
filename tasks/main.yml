@@ -28,21 +28,24 @@
   template: src=Catalina/solr.xml.j2 dest=/etc/tomcat6/Catalina/{{ tomcat6_hostname }}/solr.xml owner={{ tomcat_user }} group={{ tomcat_user }} mode=0755
   notify: restart tomcat
 
-- name: Copy Solr multicore files into place.
-  copy: src=cores.tar.gz dest={{ solr_path }}/cores.tar.gz owner={{ tomcat_user }} group={{ tomcat_user }} mode=0755
-
-- name: Expand Solr multicore files.
+- name: Copy Solr multicore example into place.
   command: >
-    tar -C {{ solr_path }} -xvzf {{ solr_path }}/cores.tar.gz
+    cp -R {{ solr_path }}/example/multicore {{ solr_path }}/cores
     creates={{ solr_path }}/cores/README.txt
   notify: restart tomcat
 
-- name: Check if solr.xml file exists.
+- name: Check if solr.xml file already exists.
   stat: path={{ solr_path }}/solr.xml
   register: solr_file
 
 - name: Copy Solr core XML file into place.
-  template: src=solr.xml.j2 dest={{ solr_path }}/solr.xml owner={{ tomcat_user }} group={{ tomcat_user }} mode=0755 backup=yes
+  template: >
+    src=solr.xml.j2
+    dest={{ solr_path }}/solr.xml
+    owner={{ tomcat_user }}
+    group={{ tomcat_user }}
+    mode=755
+    backup=yes
   when: solr_file.stat.exists == false
   notify: restart tomcat
 

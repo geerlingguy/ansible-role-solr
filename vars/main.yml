@@ -3,6 +3,10 @@ workspace: /root
 tomcat_user: tomcat
 solr_version: "3.6.2"
 solr_path: /opt/solr
-# The first core in the list will be set as the default Solr core.
+
+# The first core in the list will be set as the default Solr core. For now, this
+# list is hardcoded here and shouldn't be overridden unless you know what you're
+# doing. Someday, this will be more easily configurable.
 solr_cores:
-  - example-core
+  - core0
+  - core1

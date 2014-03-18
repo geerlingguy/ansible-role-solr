@@ -22,11 +22,6 @@ The Apache Solr version to install.
 
 The path where Apache Solr will be installed.
 
-    solr_cores:
-      - example-core
-
-A list of Solr cores to be configured. The first item in the list will be set as the default core (requests to Solr without a specified core will be sent to this core).
-
 ## Dependencies
 
   - geerlingguy.tomcat6 (Installs Tomcat 6).
@@ -34,15 +29,8 @@ A list of Solr cores to be configured. The first item in the list will be set as
 ## Example Playbook
 
     - hosts: solrserver
-      vars_files:
-        - vars/main.yml
       roles:
         - { role: geerlingguy.solr }
-
-*Inside `vars/main.yml`*:
-
-    solr_cores:
-      - example
 
 ## TODO
 
