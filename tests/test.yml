@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  remote_user: root
+  roles:
+    - geerlingguy.java
+    - geerlingguy.tomcat6
+    - ansible-role-solr
