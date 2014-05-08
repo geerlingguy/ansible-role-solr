@@ -3,5 +3,5 @@
   remote_user: root
   roles:
     - geerlingguy.java
-    - geerlingguy.tomcat6
+    - { role: geerlingguy.tomcat6, tomcat6_enabled: false }
     - ansible-role-solr
