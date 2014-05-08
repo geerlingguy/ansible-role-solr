@@ -3,6 +3,7 @@
   remote_user: root
   vars:
     - tomcat6_enabled: false
+    - tomcat6_catalina_port: 8080
   roles:
     - geerlingguy.java
     - geerlingguy.tomcat6
