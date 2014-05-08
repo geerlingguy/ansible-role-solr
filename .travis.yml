@@ -9,6 +9,9 @@ before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -y curl
 
+  # Remove any remnants of Tomcat.
+  - sudo apt-get --purge remove tomcat6 tomcat6-common tomcat6-admin
+
 install:
   # Install Ansible.
   - pip install ansible==1.5.0
