@@ -49,5 +49,23 @@
   when: solr_file.stat.exists == false
   notify: restart tomcat
 
+- name: Check if setup-complete file exists.
+  stat: "path={{ solr_path }}/setup-complete"
+  register: setup_complete
+
 - name: Fix file permissions.
-  file: path={{ solr_path }} state=directory owner={{ tomcat_user }} group={{ tomcat_user }} mode=0755 recurse=yes
+  file: >
+    path={{ solr_path }}
+    state=directory
+    owner={{ tomcat_user }} group={{ tomcat_user }} mode=0755
+    recurse=yes
+  when: setup_complete.stat.exists == false
+
+- name: Create file to indicate Solr install completion.
+  file: >
+    path={{ solr_path }}/setup-complete
+    state=touch
+    owner={{ tomcat_user }}
+    group={{ tomcat_user }}
+    mode=755
+  when: setup_complete.stat.exists == false
