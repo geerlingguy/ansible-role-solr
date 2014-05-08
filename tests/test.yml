@@ -1,7 +1,9 @@
 ---
 - hosts: localhost
   remote_user: root
+  vars:
+    - tomcat6_enabled: false
   roles:
     - geerlingguy.java
-    - { role: geerlingguy.tomcat6, tomcat6_enabled: false }
+    - geerlingguy.tomcat6
     - ansible-role-solr
