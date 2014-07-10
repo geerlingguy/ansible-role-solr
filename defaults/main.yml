@@ -1,6 +1,7 @@
 ---
 workspace: /root
 tomcat_user: tomcat
+tomcat_lib_path: /usr/share/tomcat6/lib/
 solr_version: "4.9.0"
 solr_path: /opt/solr
 

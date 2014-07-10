@@ -66,6 +66,14 @@
   stat: "path={{ solr_path }}/setup-complete"
   register: setup_complete
 
+- name: Copy logging jar files and configuration into place for Solr 4.x.
+  shell: "{{ item }}"
+  with_items:
+    - "cp -n /opt/solr/example/lib/ext/* {{ tomcat_lib_path }}"
+    - "cp -n /opt/solr/example/resources/log4j.properties {{ tomcat_lib_path }}"
+  when: "(setup_complete.stat.exists == false) and (solr_version.split('.')[0] > 4)"
+  notify: restart tomcat
+
 - name: Fix file permissions.
   file: >
     path={{ solr_path }}
