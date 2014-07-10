@@ -16,7 +16,7 @@ Available variables are listed below, along with default values (see `vars/main.
 
 Files will be downloaded to this path on the remote server before being moved into place.
 
-    solr_version: "3.6.2"
+    solr_version: "4.9.0"
 
 The Apache Solr version to install.
 
@@ -36,7 +36,7 @@ The path where Apache Solr will be installed.
 
 ## TODO
 
-  - Set up better scaffolding for each core (right now each core would get a hard-coded Drupal-specific solr configuration, from `cores.tar.gz`).
+  - Set up better scaffolding for each core.
   - Allow for more advanced configuration (multi-server, master, slave, etc.).
 
 ## License

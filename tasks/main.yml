@@ -2,25 +2,35 @@
 - name: Include OS-specific variables.
   include_vars: "{{ ansible_os_family }}.yml"
 
+- name: Set solr_filename for Solr > 4.x.
+  set_fact: >
+    solr_filename=solr-{{ solr_version }}
+  when: "solr_version.split('.')[0] > 4"
+
+- name: Set solr_filename for Solr < 4.x.
+  set_fact: >
+    solr_filename=apache-solr-{{ solr_version }}
+  when: "solr_version.split('.')[0] < 4"
+
 - name: Download Solr.
   get_url: >
-    url=http://archive.apache.org/dist/lucene/solr/{{ solr_version }}/apache-solr-{{ solr_version }}.tgz
-    dest={{ workspace }}/apache-solr-{{ solr_version }}.tgz
+    url=http://archive.apache.org/dist/lucene/solr/{{ solr_version }}/{{ solr_filename }}.tgz
+    dest={{ workspace }}/{{ solr_filename }}.tgz
     force=no
 
 - name: Expand Solr.
   command: >
-    tar -C {{ workspace }} -xvzf {{ workspace }}/apache-solr-{{ solr_version }}.tgz
-    creates={{ workspace }}/apache-solr-{{ solr_version }}/dist/apache-solr-{{ solr_version }}.war
+    tar -C {{ workspace }} -xvzf {{ workspace }}/{{ solr_filename }}.tgz
+    creates={{ workspace }}/{{ solr_filename }}/dist/{{ solr_filename }}.war
 
 - name: Copy Solr into place.
   command: >
-    cp -r {{ workspace }}/apache-solr-{{ solr_version }} {{ solr_path }}
-    creates={{ solr_path }}/dist/apache-solr-{{ solr_version }}.war
+    cp -r {{ workspace }}/{{ solr_filename }} {{ solr_path }}
+    creates={{ solr_path }}/dist/{{ solr_filename }}.war
 
 - name: Copy Solr war file into place.
   command: >
-    cp {{ solr_path }}/dist/apache-solr-{{ solr_version }}.war {{ solr_path }}/solr.war
+    cp {{ solr_path }}/dist/{{ solr_filename }}.war {{ solr_path }}/solr.war
     creates={{ solr_path }}/solr.war
   notify: restart tomcat
 
