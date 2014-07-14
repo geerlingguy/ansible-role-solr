@@ -2,8 +2,10 @@
 - hosts: localhost
   remote_user: root
   vars:
-    - tomcat6_enabled: false
-    - tomcat6_catalina_port: 8080
+    tomcat6_enabled: false
+    tomcat6_catalina_port: 8080
+    java_packages:
+      - openjdk-6-jdk
   roles:
     - geerlingguy.java
     - geerlingguy.tomcat6
