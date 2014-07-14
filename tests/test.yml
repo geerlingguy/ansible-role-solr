@@ -5,7 +5,7 @@
     tomcat6_enabled: false
     tomcat6_catalina_port: 8080
     java_packages:
-      - openjdk-6-jdk
+      - openjdk-7-jdk
   roles:
     - geerlingguy.java
     - geerlingguy.tomcat6
