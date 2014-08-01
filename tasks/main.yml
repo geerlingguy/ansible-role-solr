@@ -2,15 +2,15 @@
 - name: Include OS-specific variables.
   include_vars: "{{ ansible_os_family }}.yml"
 
-- name: Set solr_filename for Solr > 4.x.
+- name: Set solr_filename for Solr 4.x.
   set_fact: >
     solr_filename=solr-{{ solr_version }}
-  when: "solr_version.split('.')[0] > 4"
+  when: "solr_version.split('.')[0] == '4'"
 
-- name: Set solr_filename for Solr < 4.x.
+- name: Set solr_filename for Solr 3.x.
   set_fact: >
     solr_filename=apache-solr-{{ solr_version }}
-  when: "solr_version.split('.')[0] < 4"
+  when: "solr_version.split('.')[0] == '3'"
 
 - name: Download Solr.
   get_url: >
@@ -71,7 +71,7 @@
   with_items:
     - "cp -n /opt/solr/example/lib/ext/* {{ tomcat_lib_path }}"
     - "cp -n /opt/solr/example/resources/log4j.properties {{ tomcat_lib_path }}"
-  when: "(setup_complete.stat.exists == false) and (solr_version.split('.')[0] > 4)"
+  when: "(setup_complete.stat.exists == false) and (solr_version.split('.')[0] == '4')"
   notify: restart tomcat
 
 - name: Fix file permissions.
