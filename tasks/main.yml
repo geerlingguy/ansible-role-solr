@@ -43,7 +43,7 @@
 
 - name: Copy Solr multicore example into place.
   command: >
-    cp -R {{ solr_path }}/example/multicore {{ solr_path }}/cores
+    cp -R {{ workspace }}/{{ solr_filename }}/example/multicore {{ solr_path }}/cores
     creates={{ solr_path }}/cores/README.txt
   notify: restart tomcat
 
@@ -69,8 +69,8 @@
 - name: Copy logging jar files and configuration into place for Solr 4.x.
   shell: "{{ item }}"
   with_items:
-    - "cp -n /opt/solr/example/lib/ext/* {{ tomcat_lib_path }}"
-    - "cp -n /opt/solr/example/resources/log4j.properties {{ tomcat_lib_path }}"
+    - "cp -n {{ workspace }}/{{ solr_filename }}/example/lib/ext/* {{ tomcat_lib_path }}"
+    - "cp -n {{ workspace }}/{{ solr_filename }}/example/resources/log4j.properties {{ tomcat_lib_path }}"
   when: "(setup_complete.stat.exists == false) and (solr_version.split('.')[0] == '4')"
   notify: restart tomcat
 
