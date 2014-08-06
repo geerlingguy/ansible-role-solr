@@ -48,7 +48,7 @@
   notify: restart tomcat
 
 - name: Check if solr.xml file already exists.
-  stat: path={{ solr_path }}/solr.xml
+  stat: "path={{ solr_path }}/solr.xml"
   register: solr_file
 
 - name: Copy Solr core XML file into place.
@@ -69,8 +69,8 @@
 - name: Copy logging jar files and configuration into place for Solr 4.x.
   shell: "{{ item }}"
   with_items:
-    - "cp -n /opt/solr/example/lib/ext/* {{ tomcat_lib_path }}"
-    - "cp -n /opt/solr/example/resources/log4j.properties {{ tomcat_lib_path }}"
+    - "cp -n {{ solr_path }}/example/lib/ext/* {{ tomcat_lib_path }}"
+    - "cp -n {{ solr_path }}/example/resources/log4j.properties {{ tomcat_lib_path }}"
   when: "(setup_complete.stat.exists == false) and (solr_version.split('.')[0] == '4')"
   notify: restart tomcat
 
