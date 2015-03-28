@@ -1,4 +1,8 @@
 ---
+- name: Check if solr_home is already set up.
+  stat: "path={{ solr_home }}/solr.xml"
+  register: solr_example
+
 - name: Ensure solr_home directory exists.
   file:
     path: "{{ solr_home }}"
@@ -6,10 +10,7 @@
     owner: "{{ solr_user }}"
     group: "{{ solr_user }}"
     mode: 0755
-
-- name: Check if solr_home is already set up.
-  stat: "path={{ solr_home }}/solr.xml"
-  register: solr_example
+  when: not solr_example.stat.exists
 
 - name: Copy Solr example into solr_home.
   shell: "cp -r {{ solr_install_path }}/example/solr/* {{ solr_home }}"
@@ -28,3 +29,4 @@
     owner: "{{ solr_user }}"
     group: "{{ solr_user }}"
     recurse: yes
+  when: not solr_example.stat.exists
