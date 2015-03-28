@@ -13,7 +13,6 @@
     src: "solr-init-{{ ansible_os_family }}.j2"
     dest: /etc/init.d/solr
     mode: 0755
-  notify: restart solr
 
 - name: Ensure daemon is installed (Debian).
   apt: name=daemon state=installed
