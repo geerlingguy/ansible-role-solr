@@ -39,4 +39,4 @@ script:
     || (echo 'Idempotence test: fail' && exit 1)
 
   # Make sure Solr is running.
-  - curl $SOLR_PING_URL
+  - curl "$SOLR_PING_URL"
