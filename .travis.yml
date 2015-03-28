@@ -35,6 +35,7 @@ script:
     || (echo 'Idempotence test: fail' && exit 1)
 
   # Make sure Solr is running.
+  - sleep 10
   - curl http://localhost:8983/solr/admin/ping
 
 after_failure:
