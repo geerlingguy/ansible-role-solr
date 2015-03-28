@@ -3,7 +3,8 @@ language: python
 python: "2.7"
 
 env:
-  - SITE=test.yml
+  - SITE=test-solr-3x.yml
+  - SITE=test-solr-4x.yml
 
 before_install:
   - sudo apt-get update -qq
