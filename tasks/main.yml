@@ -1,92 +1,39 @@
 ---
-- name: Include OS-specific variables.
-  include_vars: "{{ ansible_os_family }}.yml"
+- include: user.yml
+  when: solr_create_user
 
 - name: Set solr_filename for Solr 4.x.
-  set_fact: >
-    solr_filename=solr-{{ solr_version }}
+  set_fact:
+    "solr_filename=solr-{{ solr_version }}"
   when: "solr_version.split('.')[0] == '4'"
 
 - name: Set solr_filename for Solr 3.x.
-  set_fact: >
-    solr_filename=apache-solr-{{ solr_version }}
+  set_fact:
+    solr_filename: "apache-solr-{{ solr_version }}"
   when: "solr_version.split('.')[0] == '3'"
 
 - name: Download Solr.
-  get_url: >
-    url=http://archive.apache.org/dist/lucene/solr/{{ solr_version }}/{{ solr_filename }}.tgz
-    dest={{ workspace }}/{{ solr_filename }}.tgz
-    force=no
+  get_url:
+    url: "http://archive.apache.org/dist/lucene/solr/{{ solr_version }}/{{ solr_filename }}.tgz"
+    dest: "{{ solr_workspace }}/{{ solr_filename }}.tgz"
+    force: no
 
 - name: Expand Solr.
   command: >
-    tar -C {{ workspace }} -xvzf {{ workspace }}/{{ solr_filename }}.tgz
-    creates={{ workspace }}/{{ solr_filename }}/dist/{{ solr_filename }}.war
+    tar -C {{ solr_workspace }} -xvzf {{ solr_workspace }}/{{ solr_filename }}.tgz
+    creates={{ solr_workspace }}/{{ solr_filename }}/dist/{{ solr_filename }}.war
 
 - name: Copy Solr into place.
   command: >
-    cp -r {{ workspace }}/{{ solr_filename }} {{ solr_path }}
-    creates={{ solr_path }}/dist/{{ solr_filename }}.war
+    cp -r {{ solr_workspace }}/{{ solr_filename }} {{ solr_install_path }}
+    creates={{ solr_install_path }}/dist/{{ solr_filename }}.war
 
-- name: Copy Solr war file into place.
-  command: >
-    cp {{ solr_path }}/dist/{{ solr_filename }}.war {{ solr_path }}/solr.war
-    creates={{ solr_path }}/solr.war
-  notify: restart tomcat
+- name: Ensure Solr install files are owned by the solr_user.
+  file:
+    path: "{{ solr_install_path }}"
+    owner: "{{ solr_user }}"
+    group: "{{ solr_user }}"
+    recurse: yes
 
-- name: Copy solr.xml into Tomcat.
-  template: >
-    src=Catalina/solr.xml.j2
-    dest=/etc/tomcat6/Catalina/{{ tomcat6_hostname }}/solr.xml
-    owner={{ tomcat_user }} group={{ tomcat_user }} mode=755
-  notify: restart tomcat
-
-- name: Copy Solr multicore example into place.
-  command: >
-    cp -R {{ solr_path }}/example/multicore {{ solr_path }}/cores
-    creates={{ solr_path }}/cores/README.txt
-  notify: restart tomcat
-
-- name: Check if solr.xml file already exists.
-  stat: "path={{ solr_path }}/solr.xml"
-  register: solr_file
-
-- name: Copy Solr core XML file into place.
-  template: >
-    src=solr.xml.j2
-    dest={{ solr_path }}/solr.xml
-    owner={{ tomcat_user }}
-    group={{ tomcat_user }}
-    mode=755
-    backup=yes
-  when: solr_file.stat.exists == false
-  notify: restart tomcat
-
-- name: Check if setup-complete file exists.
-  stat: "path={{ solr_path }}/setup-complete"
-  register: setup_complete
-
-- name: Copy logging jar files and configuration into place for Solr 4.x.
-  shell: "{{ item }}"
-  with_items:
-    - "cp -n {{ solr_path }}/example/lib/ext/* {{ tomcat_lib_path }}"
-    - "cp -n {{ solr_path }}/example/resources/log4j.properties {{ tomcat_lib_path }}"
-  when: "(setup_complete.stat.exists == false) and (solr_version.split('.')[0] == '4')"
-  notify: restart tomcat
-
-- name: Fix file permissions.
-  file: >
-    path={{ solr_path }}
-    state=directory
-    owner={{ tomcat_user }} group={{ tomcat_user }} mode=0755
-    recurse=yes
-  when: setup_complete.stat.exists == false
-
-- name: Create file to indicate Solr install completion.
-  file: >
-    path={{ solr_path }}/setup-complete
-    state=touch
-    owner={{ tomcat_user }}
-    group={{ tomcat_user }}
-    mode=755
-  when: setup_complete.stat.exists == false
+- include: solr-home.yml
+- include: init.yml

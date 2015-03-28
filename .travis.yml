@@ -33,6 +33,5 @@ script:
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)
 
-  # Make sure Java is installed.
-  - >
-    curl http://localhost:8080/solr/core0/admin/ping
+  # Make sure Solr is running.
+  - curl http://localhost:8080/solr/core0/admin/ping

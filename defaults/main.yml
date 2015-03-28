@@ -1,13 +1,15 @@
 ---
-workspace: /root
-tomcat_user: tomcat
-tomcat_lib_path: /usr/share/tomcat6/lib/
-solr_version: "4.10.2"
-solr_path: /opt/solr
+solr_workspace: /root
 
-# The first core in the list will be set as the default Solr core. For now, this
-# list is hardcoded here and shouldn't be overridden unless you know what you're
-# doing. Someday, this will be more easily configurable.
-solr_cores:
-  - core0
-  - core1
+solr_create_user: true
+solr_user: solr
+
+solr_version: "4.10.4"
+
+solr_install_path: /opt/solr
+solr_home: /var/solr
+solr_log_file_path: /var/log/solr.log
+
+solr_port: "8983"
+solr_xms: "256M"
+solr_xmx: "512M"
