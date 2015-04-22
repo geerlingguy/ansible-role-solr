@@ -1,3 +1,3 @@
 ---
 - name: restart solr
-  service: name=solr state=restarted
+  service: name=solr state=restarted sleep=5

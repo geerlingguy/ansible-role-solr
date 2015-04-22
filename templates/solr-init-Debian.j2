@@ -16,7 +16,7 @@ LOG_FILE="{{ solr_log_file_path }}"
 start () {
     echo -n "Starting solr... "
 
-    daemon --chdir="$SOLR_DIR" --command "$START_COMMAND" --respawn --output=$LOG_FILE --name=solr --verbose
+    daemon --chdir="$SOLR_DIR" --command "$START_COMMAND" --respawn --output=$LOG_FILE --name=solr
 
     RETVAL=$?
     if [ $RETVAL = 0 ]
@@ -31,7 +31,7 @@ start () {
 stop () {
     echo -n "Stopping solr... "
 
-    daemon --stop --name=solr --verbose
+    daemon --stop --name=solr
 
     RETVAL=$?
     if [ $RETVAL = 0 ]
@@ -45,7 +45,7 @@ stop () {
 
 restart () {
     echo -n "Restarting solr... "
-    daemon --restart --name=solr --verbose
+    daemon --restart --name=solr
 
     RETVAL=$?
     if [ $RETVAL = 0 ]
@@ -59,7 +59,7 @@ restart () {
 
 check_status () {
     # Report on the status of the daemon
-    daemon --running --verbose --name=solr
+    daemon --running --name=solr --verbose
     return $?
 }
 
