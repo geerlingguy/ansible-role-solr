@@ -14,7 +14,7 @@
 
 - name: Download Solr.
   get_url:
-    url: "http://archive.apache.org/dist/lucene/solr/{{ solr_version }}/{{ solr_filename }}.tgz"
+    url: "{{ solr_mirror }}/lucene/solr/{{ solr_version }}/{{ solr_filename }}.tgz"
     dest: "{{ solr_workspace }}/{{ solr_filename }}.tgz"
     force: no
 
