@@ -12,7 +12,7 @@ This role is currently tested and working with Solr 3.x and 4.x; 5.x is not yet 
 
 ## Role Variables
 
-Available variables are listed below, along with default values (see `vars/main.yml`):
+Available variables are listed below, along with default values (see `defaults/main.yml`):
 
     solr_workspace: /root
 
