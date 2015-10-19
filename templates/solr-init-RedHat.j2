@@ -15,9 +15,9 @@ STOP_COMMAND="java -jar $JAVA_OPTIONS $SOLR_DIR/start.jar --stop"
 LOG_FILE="{{ solr_log_file_path }}"
 
 start () {
-    echo -n "Starting solr... "
+    echo -n "Starting {{ solr_service }}... "
 
-    if ps aux | grep "[s]olr.solr.home" > /dev/null
+    if ps aux | grep "[s]olr.solr.home={{ solr_home }}" > /dev/null
     then
         echo -n "already started... "
     else
@@ -35,9 +35,9 @@ start () {
 }
 
 stop () {
-    echo -n "Stopping solr... "
+    echo -n "Stopping {{ solr_service }}... "
 
-    if ps aux | grep "[s]olr.solr.home" > /dev/null
+    if ps aux | grep "[s]olr.solr.home={{ solr_home }}" > /dev/null
     then
         $STOP_COMMAND
     else
@@ -61,7 +61,7 @@ restart () {
 }
 
 check_status () {
-    if ps aux | grep "[s]olr.solr.home" > /dev/null
+    if ps aux | grep "[s]olr.solr.home={{ solr_home }}" > /dev/null
     then
         printf "Solr is running.\n"
     else
@@ -83,7 +83,7 @@ case "$1" in
         restart
     ;;
     *)
-        echo $"Usage: solr {start|status|stop|restart}"
+        echo $"Usage: {{ solr_service }} {start|status|stop|restart}"
         exit 3
     ;;
 esac

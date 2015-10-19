@@ -11,7 +11,7 @@
 - name: Copy solr init script into place.
   template:
     src: "solr-init-{{ ansible_os_family }}.j2"
-    dest: /etc/init.d/solr
+    dest: "/etc/init.d/{{ solr_service }}"
     mode: 0755
 
 - name: Ensure daemon is installed (Debian).
@@ -19,4 +19,4 @@
   when: ansible_os_family == "Debian"
 
 - name: Ensure solr is started and enabled on boot.
-  service: name=solr state=started enabled=yes
+  service: name={{ solr_service }} state=started enabled=yes
