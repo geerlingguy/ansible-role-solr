@@ -14,9 +14,9 @@ START_COMMAND="java -jar $JAVA_OPTIONS start.jar"
 LOG_FILE="{{ solr_log_file_path }}"
 
 start () {
-    echo -n "Starting solr... "
+    echo -n "Starting {{ solr_service }}... "
 
-    daemon --chdir="$SOLR_DIR" --command "$START_COMMAND" --respawn --output=$LOG_FILE --name=solr
+    daemon --chdir="$SOLR_DIR" --command "$START_COMMAND" --respawn --output=$LOG_FILE --name="{{ solr_service }}"
 
     RETVAL=$?
     if [ $RETVAL = 0 ]
@@ -29,9 +29,9 @@ start () {
 }
 
 stop () {
-    echo -n "Stopping solr... "
+    echo -n "Stopping {{ solr_service }}... "
 
-    daemon --stop --name=solr
+    daemon --stop --name="{{ solr_service }}"
 
     RETVAL=$?
     if [ $RETVAL = 0 ]
@@ -44,8 +44,8 @@ stop () {
 }
 
 restart () {
-    echo -n "Restarting solr... "
-    daemon --restart --name=solr
+    echo -n "Restarting {{ solr_service }}... "
+    daemon --restart --name="{{ solr_service }}"
 
     RETVAL=$?
     if [ $RETVAL = 0 ]
@@ -59,7 +59,7 @@ restart () {
 
 check_status () {
     # Report on the status of the daemon
-    daemon --running --name=solr --verbose
+    daemon --running --name="{{ solr_service }}" --verbose
     return $?
 }
 
@@ -77,7 +77,7 @@ case "$1" in
         restart
     ;;
     *)
-        echo $"Usage: solr {start|status|stop|restart}"
+        echo $"Usage: {{ solr_service }} {start|status|stop|restart}"
         exit 3
     ;;
 esac
