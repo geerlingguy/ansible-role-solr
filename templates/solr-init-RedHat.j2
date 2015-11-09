@@ -9,7 +9,7 @@
 . /etc/rc.d/init.d/functions
 
 SOLR_DIR="{{ solr_install_path }}/example"
-JAVA_OPTIONS="-Dsolr.solr.home={{ solr_home }} -Djetty.port={{ solr_port }} -Xms{{ solr_xms }} -Xmx{{ solr_xmx }} -DSTOP.PORT=8079 -DSTOP.KEY=secret"
+JAVA_OPTIONS="-Dsolr.solr.home={{ solr_home }} -Djetty.host={{ solr_host }} -Djetty.port={{ solr_port }} -Xms{{ solr_xms }} -Xmx{{ solr_xmx }} -DSTOP.PORT=8079 -DSTOP.KEY=secret"
 START_COMMAND="java -jar $JAVA_OPTIONS start.jar"
 STOP_COMMAND="java -jar $JAVA_OPTIONS $SOLR_DIR/start.jar --stop"
 LOG_FILE="{{ solr_log_file_path }}"
