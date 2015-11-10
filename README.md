@@ -12,7 +12,7 @@ This role is currently tested and working with Solr 3.x and 4.x; 5.x is not yet 
 
 ## Role Variables
 
-Available variables are listed below, along with default values (see `vars/main.yml`):
+Available variables are listed below, along with default values (see `defaults/main.yml`):
 
     solr_workspace: /root
 
@@ -26,6 +26,10 @@ Solr will be run under Jetty as the `solr_user`. Set `solr_create_user` to `fals
     solr_version: "4.10.4"
 
 The Apache Solr version to install.
+
+    solr_mirror: "http://archive.apache.org/dist"
+
+The Apache Project mirror where the Solr tarball will be downloaded from. In case of download timeouts it is useful to set the mirror to the [suggested site](https://www.apache.org/dyn/closer.cgi/lucene/solr/).
 
     solr_install_path: /opt/solr
 
