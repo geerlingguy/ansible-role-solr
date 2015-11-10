@@ -19,4 +19,4 @@
   when: ansible_os_family == "Debian"
 
 - name: Ensure solr is started and enabled on boot.
-  service: name=solr state=started enabled=yes runlevel=2
+  service: name=solr state=started enabled=yes
