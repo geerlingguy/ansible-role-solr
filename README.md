@@ -29,7 +29,7 @@ The Apache Solr version to install.
 
     solr_mirror: "http://archive.apache.org/dist"
 
-The Apache Project mirror where the Solr tarball will be downloaded from. In case of download timeouts it is useful to set the mirror to the [suggested site](https://www.apache.org/dyn/closer.cgi/lucene/solr/).
+The Apache Project mirror from which the Solr tarball will be downloaded. In case of slow download speed or timeouts it is useful to set the mirror to the one suggested by Apache's [mirror download site](https://www.apache.org/dyn/closer.cgi/lucene/solr/).
 
     solr_install_path: /opt/solr
 
