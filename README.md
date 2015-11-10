@@ -39,6 +39,10 @@ The path where local Solr data (search collections and configuration) will be st
 
 Path where Solr log file will be created.
 
+    solr_host: "0.0.0.0"
+
+The hostname or IP address to which Solr will bind. Defaults to `0.0.0.0` which allows Solr to listen on all interfaces.
+
     solr_port: "8983"
 
 The port on which Solr will run.
