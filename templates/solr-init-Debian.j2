@@ -9,7 +9,7 @@
 # Adapted by Jeff Geerling from http://stackoverflow.com/a/8014720/100134
 
 SOLR_DIR="{{ solr_install_path }}/example"
-JAVA_OPTIONS="-Dsolr.solr.home={{ solr_home }} -Djetty.port={{ solr_port }} -Xms{{ solr_xms }} -Xmx{{ solr_xmx }}"
+JAVA_OPTIONS="-Dsolr.solr.home={{ solr_home }} -Djetty.host={{ solr_host }} -Djetty.port={{ solr_port }} -Xms{{ solr_xms }} -Xmx{{ solr_xmx }}"
 START_COMMAND="java -jar $JAVA_OPTIONS start.jar"
 LOG_FILE="{{ solr_log_file_path }}"
 

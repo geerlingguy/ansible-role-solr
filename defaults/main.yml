@@ -10,6 +10,7 @@ solr_install_path: /opt/solr
 solr_home: /var/solr
 solr_log_file_path: /var/log/solr.log
 
+solr_host: "127.0.0.1"
 solr_port: "8983"
 solr_xms: "256M"
 solr_xmx: "512M"
