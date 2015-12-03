@@ -7,7 +7,7 @@ solr_user: solr
 solr_version: "4.10.4"
 solr_mirror: "http://archive.apache.org/dist"
 
-solr_init_service_name: solr
+solr_service_name: solr
 solr_install_path: /opt/solr
 solr_home: /var/solr
 solr_log_file_path: /var/log/solr.log

@@ -14,9 +14,9 @@ START_COMMAND="java -jar $JAVA_OPTIONS start.jar"
 LOG_FILE="{{ solr_log_file_path }}"
 
 start () {
-    echo -n "Starting {{ solr_init_service_name }}... "
+    echo -n "Starting {{ solr_service_name }}... "
 
-    daemon --chdir="$SOLR_DIR" --command "$START_COMMAND" --respawn --output=$LOG_FILE --name={{ solr_init_service_name }}
+    daemon --chdir="$SOLR_DIR" --command "$START_COMMAND" --respawn --output=$LOG_FILE --name={{ solr_service_name }}
 
     RETVAL=$?
     if [ $RETVAL = 0 ]
@@ -29,9 +29,9 @@ start () {
 }
 
 stop () {
-    echo -n "Stopping {{ solr_init_service_name }}... "
+    echo -n "Stopping {{ solr_service_name }}... "
 
-    daemon --stop --name={{ solr_init_service_name }}
+    daemon --stop --name={{ solr_service_name }}
 
     RETVAL=$?
     if [ $RETVAL = 0 ]
@@ -45,7 +45,7 @@ stop () {
 
 restart () {
     echo -n "Restarting solr... "
-    daemon --restart --name={{ solr_init_service_name }}
+    daemon --restart --name={{ solr_service_name }}
 
     RETVAL=$?
     if [ $RETVAL = 0 ]
@@ -59,7 +59,7 @@ restart () {
 
 check_status () {
     # Report on the status of the daemon
-    daemon --running --name={{ solr_init_service_name }} --verbose
+    daemon --running --name={{ solr_service_name }} --verbose
     return $?
 }
 
