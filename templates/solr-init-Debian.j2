@@ -8,6 +8,15 @@
 #
 # Adapted by Jeff Geerling from http://stackoverflow.com/a/8014720/100134
 
+### BEGIN INIT INFO
+# Provides:             solr
+# Required-Start:       $remote_fs $syslog
+# Required-Stop:        $remote_fs $syslog
+# Default-Start:        2 3 4 5
+# Default-Stop:         0 1 6
+# Short-Description:    Apache Solr search server
+### END INIT INFO
+
 SOLR_DIR="{{ solr_install_path }}/example"
 JAVA_OPTIONS="-Dsolr.solr.home={{ solr_home }} -Djetty.host={{ solr_host }} -Djetty.port={{ solr_port }} -Xms{{ solr_xms }} -Xmx{{ solr_xmx }}"
 START_COMMAND="java -jar $JAVA_OPTIONS start.jar"
