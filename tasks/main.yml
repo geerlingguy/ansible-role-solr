@@ -23,6 +23,7 @@
     src: "{{ solr_workspace }}/{{ solr_filename }}.tgz"
     dest: "{{ solr_workspace }}"
     creates: "{{ solr_workspace }}/{{ solr_filename }}/dist/{{ solr_filename }}.war"
+    copy: no
 
 - name: Check if Solr is already installed.
   stat: "path={{ solr_install_path }}/dist/{{ solr_filename }}.war"
