@@ -19,9 +19,10 @@
     force: no
 
 - name: Expand Solr.
-  command: >
-    tar -C {{ solr_workspace }} -xvzf {{ solr_workspace }}/{{ solr_filename }}.tgz
-    creates={{ solr_workspace }}/{{ solr_filename }}/dist/{{ solr_filename }}.war
+  unarchive:
+    src: "{{ solr_workspace }}/{{ solr_filename }}.tgz"
+    dest: "{{ solr_workspace }}"
+    creates: "{{ solr_workspace }}/{{ solr_filename }}/dist/{{ solr_filename }}.war"
 
 - name: Check if Solr is already installed.
   stat: "path={{ solr_install_path }}/dist/{{ solr_filename }}.war"
