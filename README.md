@@ -27,7 +27,7 @@ Solr will be run under Jetty as the `solr_user`. Set `solr_create_user` to `fals
 
 The Apache Solr version to install.
 
-    solr_mirror: "http://archive.apache.org/dist"
+    solr_mirror: "https://archive.apache.org/dist"
 
 The Apache Project mirror from which the Solr tarball will be downloaded. In case of slow download speed or timeouts it is useful to set the mirror to the one suggested by Apache's [mirror download site](https://www.apache.org/dyn/closer.cgi/lucene/solr/).
 
