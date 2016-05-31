@@ -5,7 +5,7 @@
 - name: Set solr_filename for Solr 4+.
   set_fact:
     solr_filename: "solr-{{ solr_version }}"
-  when: "solr_version.split('.')[0] > 3"
+  when: "solr_version.split('.')[0] >= '4'"
 
 - name: Set solr_filename for Solr 3.x.
   set_fact:
@@ -25,21 +25,10 @@
     creates: "{{ solr_workspace }}/{{ solr_filename }}/CHANGES.txt"
     copy: no
 
-- name: Check if Solr is already installed.
-  stat: "path={{ solr_install_path }}/dist/{{ solr_filename }}.war"
-  register: solr_war_file
+# Install Solr < 5.
+- include: install-pre5.yml
+  when: "solr_version.split('.')[0] < '5'"
 
-- name: Copy Solr into place.
-  command: "cp -r {{ solr_workspace }}/{{ solr_filename }} {{ solr_install_path }}"
-  when: not solr_war_file.stat.exists
-
-- name: Ensure Solr install files are owned by the solr_user.
-  file:
-    path: "{{ solr_install_path }}"
-    owner: "{{ solr_user }}"
-    group: "{{ solr_user }}"
-    recurse: yes
-  when: not solr_war_file.stat.exists
-
-- include: solr-home.yml
-- include: init-script.yml
+# Install Solr 5+.
+- include: install.yml
+  when: "solr_version.split('.')[0] >= '5'"
