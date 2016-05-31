@@ -32,3 +32,9 @@
 # Install Solr 5+.
 - include: install.yml
   when: "solr_version.split('.')[0] >= '5'"
+
+- name: Ensure solr is started and enabled on boot.
+  service:
+    name: "{{ solr_service_name }}"
+    state: started
+    enabled: yes
