@@ -2,10 +2,10 @@
 - include: user.yml
   when: solr_create_user
 
-- name: Set solr_filename for Solr 4.x.
+- name: Set solr_filename for Solr 4+.
   set_fact:
-    "solr_filename=solr-{{ solr_version }}"
-  when: "solr_version.split('.')[0] == '4'"
+    solr_filename: "solr-{{ solr_version }}"
+  when: "solr_version.split('.')[0] > 3"
 
 - name: Set solr_filename for Solr 3.x.
   set_fact:
@@ -22,7 +22,7 @@
   unarchive:
     src: "{{ solr_workspace }}/{{ solr_filename }}.tgz"
     dest: "{{ solr_workspace }}"
-    creates: "{{ solr_workspace }}/{{ solr_filename }}/dist/{{ solr_filename }}.war"
+    creates: "{{ solr_workspace }}/{{ solr_filename }}/CHANGES.txt"
     copy: no
 
 - name: Check if Solr is already installed.

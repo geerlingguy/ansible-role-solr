@@ -8,15 +8,23 @@
     mode: 0664
   changed_when: false
 
-- name: Copy solr init script into place.
+- name: Copy solr init script into place (Solr < 5).
+  template:
+    src: "solr-init-{{ ansible_os_family }}-pre5.j2"
+    dest: "/etc/init.d/{{ solr_service_name }}"
+    mode: 0755
+  when: "solr_version.split('.')[0] < 5"
+
+- name: Copy solr init script into place (Solr 5+).
   template:
     src: "solr-init-{{ ansible_os_family }}.j2"
     dest: "/etc/init.d/{{ solr_service_name }}"
     mode: 0755
+  when: "solr_version.split('.')[0] >= 5"
 
 - name: Ensure daemon is installed (Debian).
   apt: name=daemon state=installed
-  when: ansible_os_family == "Debian"
+  when: ansible_os_family == "Debian" and solr_version.split('.')[0] < 5
 
 - name: Ensure solr is started and enabled on boot.
   service:
