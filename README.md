@@ -6,9 +6,9 @@ An Ansible Role that installs Apache Solr on Linux servers.
 
 ## Requirements
 
-Java must be available on the server. You can easily install Java using the `geerlingguy.java` role.
+Java must be available on the server. You can easily install Java using the `geerlingguy.java` role. Make sure the Java version installed meets the minimum requirements of Solr (e.g. Java 8 for Solr 6+).
 
-This role is currently tested and working with Solr 3.x and 4.x; 5.x is not yet fully tested.
+This role is currently tested and working with Solr 3.x, 4.x, 5.x and 6.x.
 
 ## Role Variables
 
