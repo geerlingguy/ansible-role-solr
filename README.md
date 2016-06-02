@@ -47,7 +47,7 @@ The port on which Solr will run.
     solr_cores:
       - collection1
 
-A list of cores / collections which should exist on the server. Each one will be created (if it doesn't exist already) using the default example configuration that ships with Solr.
+A list of cores / collections which should exist on the server. Each one will be created (if it doesn't exist already) using the default example configuration that ships with Solr. Note that this variable only applies when using Solr 5+.
 
 ### Variables used only for Solr < 5.
 
