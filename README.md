@@ -44,6 +44,11 @@ The path where local Solr data (search collections and configuration) will be st
 
 The port on which Solr will run.
 
+    solr_cores:
+      - collection1
+
+A list of cores / collections which should exist on the server. Each one will be created (if it doesn't exist already) using the default example configuration that ships with Solr.
+
 ### Variables used only for Solr < 5.
 
 The following variables are currently only applied to installations of Solr 4 and below:

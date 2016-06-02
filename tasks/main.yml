@@ -38,3 +38,7 @@
     name: "{{ solr_service_name }}"
     state: started
     enabled: yes
+
+# Create cores, if any are configured.
+- include: cores.yml
+  when: "solr_cores and solr_version.split('.')[0] >= '5'"
