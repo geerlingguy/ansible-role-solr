@@ -13,6 +13,9 @@ solr_install_path: /opt/solr
 solr_home: /var/solr
 solr_port: "8983"
 
+solr_cores:
+  - collection1
+
 # Used only for Solr < 5.
 solr_log_file_path: /var/log/solr.log
 solr_host: "0.0.0.0"
