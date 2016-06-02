@@ -44,6 +44,11 @@ The path where local Solr data (search collections and configuration) will be st
 
 The port on which Solr will run.
 
+    solr_xms: "256M"
+    solr_xmx: "512M"
+
+Memory settings for the JVM. These should be set as high as you can allow for best performance and to reduce the chance of Solr restarting itself due to OOM situations.
+
     solr_cores:
       - collection1
 
@@ -60,11 +65,6 @@ Path where Solr log file will be created.
     solr_host: "0.0.0.0"
 
 The hostname or IP address to which Solr will bind. Defaults to `0.0.0.0` which allows Solr to listen on all interfaces.
-
-    solr_xms: "256M"
-    solr_xmx: "512M"
-
-Memory settings for the JVM. These should be set as high as you can allow for best performance and to reduce the chance of Solr restarting itself due to OOM situations.
 
 ## Dependencies
 

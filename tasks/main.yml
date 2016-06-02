@@ -42,3 +42,7 @@
 # Create cores, if any are configured.
 - include: cores.yml
   when: "solr_cores and solr_version.split('.')[0] >= '5'"
+
+# Configure solr.
+- include: configure.yml
+  when: "solr_version.split('.')[0] >= '5'"
