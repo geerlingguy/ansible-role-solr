@@ -18,3 +18,11 @@
     - regexp: "^SOLR_PORT="
       line: 'SOLR_PORT="{{ solr_port }}"'
   notify: restart solr
+
+- name: Apply Solr timezone configuration changes.
+  lineinfile:
+    dest: "{{ solr_config_file }}"
+    regexp: ".?SOLR_TIMEZONE="
+    line: "SOLR_TIMEZONE={{ solr_timezone }}"
+    state: present
+  notify: restart solr
