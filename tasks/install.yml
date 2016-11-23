@@ -24,8 +24,9 @@
     and (solr_install_script_result.changed)
   failed_when: false
 
-- name: Run systemd daemon_reload if necessary.
+- name: Run systemd daemon_reload (RHEL 7 workaround).
   systemd:
+    name: solr
     daemon_reload: yes
   when: >
     (ansible_os_family == 'RedHat')
