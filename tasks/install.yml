@@ -23,3 +23,12 @@
     and (ansible_distribution_version.split(".")[0] == '7')
     and (solr_install_script_result.changed)
   failed_when: false
+
+- name: Run systemd daemon_reload (RHEL 7 workaround).
+  systemd:
+    name: solr
+    daemon_reload: yes
+  when: >
+    (ansible_os_family == 'RedHat')
+    and (ansible_distribution_version.split(".")[0] == '7')
+    and (solr_install_script_result.changed)
