@@ -51,7 +51,7 @@ Memory settings for the JVM. These should be set as high as you can allow for be
 
     solr_timezone: "UTC"
 
-Default timezone of JVM running solr. This can be usefull when you use dataimport and delta imports (ex: comparing against a MySQL external data source). For the index itself, solr store teh date fields exactly as you pass it, it's your responsability to convert it or not in the right timezone.
+Default timezone of JVM running solr. You can override this if needed when using dataimport and delta imports (ex: comparing against a MySQL external data source). Read through Apache Solr's [Working with Dates](https://cwiki.apache.org/confluence/display/solr/Working+with+Dates) documentation for more background.
 
     solr_cores:
       - collection1
