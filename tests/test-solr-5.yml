@@ -9,7 +9,7 @@
   pre_tasks:
     - name: Update apt cache.
       apt: update_cache=yes cache_valid_time=600
-      when: ansible_distribution == "Debian"
+      when: ansible_os_family == "Debian"
 
     - name: Ensure sudo is present.
       package: name=sudo state=present
