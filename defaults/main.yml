@@ -16,6 +16,8 @@ solr_port: "8983"
 solr_xms: "256M"
 solr_xmx: "512M"
 
+solr_timezone: "UTC"
+
 solr_cores:
   - collection1
 
