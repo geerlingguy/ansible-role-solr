@@ -6,6 +6,10 @@
     java_packages:
       - openjdk-7-jdk
 
+  pre_tasks:
+    - name: Ensure sudo is present.
+      package: name=sudo state=present
+
   roles:
     - geerlingguy.java
     - role_under_test
