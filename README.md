@@ -49,6 +49,10 @@ The port on which Solr will run.
 
 Memory settings for the JVM. These should be set as high as you can allow for best performance and to reduce the chance of Solr restarting itself due to OOM situations.
 
+    solr_timezone: "UTC"
+
+Solr used timezone
+
     solr_cores:
       - collection1
 
