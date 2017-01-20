@@ -3,12 +3,12 @@ Description=Apache SOLR
 After=syslog.target network.target remote-fs.target nss-lookup.target
 
 [Service]
-PIDFile={{ solr_install_path }}/bin/solr-{{ solr_port }}.pid
-ExecStart={{ solr_install_path }}/bin/solr -e cloud -noprompt
+RemainAfterExit=yes
+Type=oneshot
 User=solr
-ExecReload=/bin/kill -s HUP $MAINPID
-ExecStop=/bin/kill -s QUIT $MAINPID
-PrivateTmp=true
+ExecStart=/etc/init.d/solr start
+ExecReload=/etc/init.d/solr restart
+ExecStop=/etc/init.d/solr stop
 
 [Install]
 WantedBy=multi-user.target
