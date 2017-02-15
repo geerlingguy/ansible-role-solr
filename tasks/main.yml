@@ -12,18 +12,12 @@
     solr_filename: "apache-solr-{{ solr_version }}"
   when: "solr_version.split('.')[0] == '3'"
 
-- name: Download Solr.
-  get_url:
-    url: "{{ solr_mirror }}/lucene/solr/{{ solr_version }}/{{ solr_filename }}.tgz"
-    dest: "{{ solr_workspace }}/{{ solr_filename }}.tgz"
-    force: no
-
 - name: Expand Solr.
   unarchive:
-    src: "{{ solr_workspace }}/{{ solr_filename }}.tgz"
+    src: "{{ solr_mirror }}/lucene/solr/{{ solr_version }}/{{ solr_filename }}.tgz"
     dest: "{{ solr_workspace }}"
+    remote_src: true
     creates: "{{ solr_workspace }}/{{ solr_filename }}/CHANGES.txt"
-    copy: no
 
 # Install Solr < 5.
 - include: install-pre5.yml
