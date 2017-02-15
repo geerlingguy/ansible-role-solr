@@ -35,3 +35,12 @@
     (ansible_os_family == 'RedHat')
     and (ansible_distribution_version.split(".")[0] == '7')
     and (solr_install_script_result.changed)
+
+- name: Run systemd daemon_reload (Suse workaround).
+  systemd:
+    name: solr
+    daemon_reload: yes
+  when: >
+    (ansible_os_family == 'Suse')
+    and (ansible_distribution_version.split(".")[0] == '12')
+    and (solr_install_script_result.changed)
