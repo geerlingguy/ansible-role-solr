@@ -4,21 +4,21 @@ services: docker
 env:
   # Test current version of Solr on latest supported OSes.
   - distro: centos7
-    solr_major_version: 6
+    playbook: test-solr-6.yml
   - distro: ubuntu1604
-    solr_major_version: 6
+    playbook: test-solr-6.yml
   - distro: debian8
-    solr_major_version: 6
+    playbook: test-solr-6.yml
 
   # Test older versions of Solr / OSes.
   - distro: ubuntu1404
-    solr_major_version: 5
+    playbook: test-solr-5.yml
   - distro: ubuntu1204
-    solr_major_version: 5
+    playbook: test-solr-5.yml
   - distro: ubuntu1404
-    solr_major_version: 4
+    playbook: test-solr-4.yml
   - distro: ubuntu1404
-    solr_major_version: 3
+    playbook: test-solr-3.yml
 
 script:
   # Configure test script so we can run extra tests after playbook is run.
