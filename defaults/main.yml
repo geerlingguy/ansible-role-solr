@@ -23,7 +23,7 @@ solr_timezone: "UTC"
 solr_cores:
   - collection1
 
-solr_config_file: /etc/default/solr.in.sh
+solr_config_file: /etc/default/{{ solr_service_name }}.in.sh
 
 # Used only for Solr < 5.
 solr_log_file_path: /var/log/solr.log
