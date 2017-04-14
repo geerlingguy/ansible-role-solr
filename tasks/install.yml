@@ -3,6 +3,9 @@
   yum: name=lsof state=present
   when: ansible_os_family == "RedHat"
 
+- name: Ensure setfacl support is present.
+  package: name=acl state=present
+
 - name: Run Solr installation script.
   shell: >
     {{ solr_workspace }}/{{ solr_filename }}/bin/install_solr_service.sh
@@ -18,5 +21,17 @@
 # Workaround for bug https://github.com/ansible/ansible-modules-core/issues/915.
 - name: Ensure solr is stopped (RHEL 7 workaround).
   command: service {{ solr_service_name }} stop
-  when: (ansible_os_family == 'RedHat') and (ansible_distribution_version.split(".")[0] == '7') and (solr_install_script_result.changed)
+  when: >
+    (ansible_os_family == 'RedHat')
+    and (ansible_distribution_version.split(".")[0] == '7')
+    and (solr_install_script_result.changed)
   failed_when: false
+
+- name: Run systemd daemon_reload (RHEL 7 workaround).
+  systemd:
+    name: solr
+    daemon_reload: yes
+  when: >
+    (ansible_os_family == 'RedHat')
+    and (ansible_distribution_version.split(".")[0] == '7')
+    and (solr_install_script_result.changed)
