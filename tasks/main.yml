@@ -45,6 +45,7 @@
     name: "{{ solr_service_name }}"
     state: started
     enabled: yes
+    daemon_reload: yes
 
 # Configure solr.
 - include: configure.yml
