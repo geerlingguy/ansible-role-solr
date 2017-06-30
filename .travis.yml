@@ -9,6 +9,8 @@ env:
     playbook: test-solr-6.yml
   - distro: debian8
     playbook: test-solr-6.yml
+  - distro: debian9
+    playbook: test-solr-6.yml
 
   # Test older versions of Solr / OSes.
   - distro: ubuntu1404
