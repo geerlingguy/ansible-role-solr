@@ -4,6 +4,7 @@
   with_items:
     - lsof
     - acl
+    - sudo
 
 - name: Run Solr installation script.
   shell: >

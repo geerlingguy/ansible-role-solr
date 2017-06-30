@@ -12,9 +12,6 @@
       apt: update_cache=yes cache_valid_time=600
       when: ansible_os_family == "Debian"
 
-    - name: Ensure sudo is present.
-      package: name=sudo state=present
-
   roles:
     - geerlingguy.java
     - role_under_test
