@@ -31,6 +31,10 @@ The Apache Solr version to install. For a full list, see [available Apache Solr 
 
 The Apache Project mirror from which the Solr tarball will be downloaded. In case of slow download speed or timeouts it is useful to set the mirror to the one suggested by Apache's [mirror download site](https://www.apache.org/dyn/closer.cgi/lucene/solr/).
 
+    solr_remove_cruft: false
+
+Whether to remove unneccessary documentation and examples from the solr directory.
+
     solr_service_manage: true
     solr_service_name: solr
     solr_service_state: started
