@@ -31,6 +31,16 @@ The Apache Solr version to install. For a full list, see [available Apache Solr 
 
 The Apache Project mirror from which the Solr tarball will be downloaded. In case of slow download speed or timeouts it is useful to set the mirror to the one suggested by Apache's [mirror download site](https://www.apache.org/dyn/closer.cgi/lucene/solr/).
 
+    solr_remove_cruft: false
+
+Whether to remove unneccessary documentation and examples from the solr directory.
+
+    solr_service_manage: true
+    solr_service_name: solr
+    solr_service_state: started
+
+By default, this role will manage the `solr` service, ensuring it is enabled at system boot and is running. You can ensure Solr is stopped by setting `solr_service_state: stopped`, or you can disable this role's management of the `solr` service entirely by setting `solr_service_manage: true`. You may also want to set `solr_restart_handler_enabled: false` (documented later) in this case.
+
     solr_install_dir: /opt
     solr_install_path: /opt/solr
 
@@ -57,6 +67,14 @@ Default timezone of JVM running solr. You can override this if needed when using
       - collection1
 
 A list of cores / collections which should exist on the server. Each one will be created (if it doesn't exist already) using the default example configuration that ships with Solr. Note that this variable only applies when using Solr 5+.
+
+    solr_connect_host: localhost
+
+The hostname or IP address on which Solr will be reachable. `localhost` should work in most circumstances, but there are special cases where you may only be able to access the local Solr instance via another IP or hostname.
+
+    solr_restart_handler_enabled: true
+
+Whether the `restart solr` handler should be used or not. If you're building containers or AMIs, you might need to disable the restart handler for a provisioning run.
 
 ### Variables used only for Solr < 5.
 
