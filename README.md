@@ -64,9 +64,9 @@ Memory settings for the JVM. These should be set as high as you can allow for be
 Default timezone of JVM running solr. You can override this if needed when using dataimport and delta imports (ex: comparing against a MySQL external data source). Read through Apache Solr's [Working with Dates](https://cwiki.apache.org/confluence/display/solr/Working+with+Dates) documentation for more background.
 
     solr_cores:
-      - collection1
+      - { name: collection1, confdir: sample_techproducts_configs }
 
-A list of cores / collections which should exist on the server. Each one will be created (if it doesn't exist already) using the default example configuration that ships with Solr. Note that this variable only applies when using Solr 5+.
+A list of cores / collections which should exist on the server. Each one will be created (if it doesn't exist already) using the example configuration provided in the `confdir` parameter. Note that this variable only applies when using Solr 5+.
 
     solr_connect_host: localhost
 
