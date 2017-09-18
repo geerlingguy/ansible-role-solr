@@ -17,11 +17,22 @@
     path: "{{ solr_install_path }}"
   register: solr_install_path_status
 
+- name: Download SHA-1 checksum from the Apache site
+  uri:
+    url: "https://archive.apache.org/dist/lucene/solr/{{ solr_version }}/{{ solr_filename }}.tgz.sha1"
+    return_content: yes
+  register: sha1_file
+
+- name: Get checksum
+  set_fact:
+    sha1_checksum: "{{ (sha1_file.content|string).split(' ')[0] }}"
+
 - name: Download Solr.
   get_url:
-    url: "{{ solr_mirror }}/lucene/solr/{{ solr_version }}/{{ solr_filename }}.tgz"
+    url: "{{ solr_package }}"
     dest: "{{ solr_workspace }}/{{ solr_filename }}.tgz"
     force: no
+    checksum: "sha1:{{ sha1_checksum }}"
   when: solr_install_path_status.stat.isdir is not defined
   register: solr_download_status
 
@@ -34,11 +45,11 @@
 
 # Install Solr < 5.
 - include: install-pre5.yml
-  when: "solr_version.split('.')[0] < '5'"
+  when: "solr_version.split('.')[0] < '5' and solr_install_path_status.stat.isdir is not defined"
 
 # Install Solr 5+.
 - include: install.yml
-  when: "solr_version.split('.')[0] >= '5'"
+  when: "solr_version.split('.')[0] >= '5' and solr_install_path_status.stat.isdir is not defined"
 
 - name: Ensure solr is started and enabled on boot if configured.
   service:

@@ -1,2 +1,4 @@
 *.retry
 tests/test.sh
+/.idea
+/*.iml
