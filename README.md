@@ -76,6 +76,23 @@ The hostname or IP address on which Solr will be reachable. `localhost` should w
 
 Whether the `restart solr` handler should be used or not. If you're building containers or AMIs, you might need to disable the restart handler for a provisioning run.
 
+	solr_config_list
+
+An optional list that need to contain items like :
+
+	- regexp: "^.?SOLR_HEAP="
+	  line: 'SOLR_HEAP=6G'
+	  
+This will be merged with the default list _solr_config_list that contains :
+
+	_solr_config_list:
+	  - regexp: "^.?SOLR_JAVA_MEM="
+	    line: 'SOLR_JAVA_MEM="-Xms{{ solr_xms }} -Xmx{{ solr_xmx }}"'
+	  - regexp: "^SOLR_PORT="
+	    line: 'SOLR_PORT="{{ solr_port }}"'
+	  - regexp: "^.?SOLR_TIMEZONE="
+	    line: 'SOLR_TIMEZONE="{{ solr_timezone }}"'
+
 ### Variables used only for Solr < 5.
 
 The following variables are currently only applied to installations of Solr 4 and below:

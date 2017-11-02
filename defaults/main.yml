@@ -28,6 +28,14 @@ solr_cores:
 
 solr_config_file: /etc/default/{{ solr_service_name }}.in.sh
 
+_solr_config_list:
+  - regexp: "^.?SOLR_JAVA_MEM="
+    line: 'SOLR_JAVA_MEM="-Xms{{ solr_xms }} -Xmx{{ solr_xmx }}"'
+  - regexp: "^SOLR_PORT="
+    line: 'SOLR_PORT="{{ solr_port }}"'
+  - regexp: "^.?SOLR_TIMEZONE="
+    line: 'SOLR_TIMEZONE="{{ solr_timezone }}"'
+
 # Enable restart solr handler
 solr_restart_handler_enabled: true
 

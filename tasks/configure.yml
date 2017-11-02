@@ -1,10 +1,8 @@
 ---
-- name: Remove existing SOLR_HEAP configuration.
-  lineinfile:
-    dest: "{{ solr_config_file }}"
-    regexp: "^SOLR_HEAP"
-    state: absent
-  notify: restart solr
+- name: Combine dicts
+  set_fact:
+    _solr_config_list: "{{ _solr_config_list }} + {{ solr_config_list }}"
+  when: solr_config_list is defined
 
 - name: Apply Solr configuration changes.
   lineinfile:
@@ -12,11 +10,5 @@
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
     state: present
-  with_items:
-    - regexp: "^.?SOLR_JAVA_MEM="
-      line: 'SOLR_JAVA_MEM="-Xms{{ solr_xms }} -Xmx{{ solr_xmx }}"'
-    - regexp: "^SOLR_PORT="
-      line: 'SOLR_PORT="{{ solr_port }}"'
-    - regexp: "^.?SOLR_TIMEZONE="
-      line: 'SOLR_TIMEZONE="{{ solr_timezone }}"'
+  with_items: "{{ _solr_config_list }}"
   notify: restart solr
