@@ -42,7 +42,7 @@ script:
 
   # Make sure Solr is running.
   - >
-    sudo docker exec ${container_id} ps -ax | grep -q 'solr'
+    sudo docker exec ${container_id} ps ax | grep -q 'solr'
     && (echo 'solr is running: pass' && exit 0)
     || (echo 'solr is running: fail' && exit 1)
 
