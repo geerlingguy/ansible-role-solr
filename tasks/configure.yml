@@ -19,4 +19,4 @@
       line: 'SOLR_PORT="{{ solr_port }}"'
     - regexp: "^.?SOLR_TIMEZONE="
       line: 'SOLR_TIMEZONE="{{ solr_timezone }}"'
-  notify: restart solr
+  notify: restart solar
