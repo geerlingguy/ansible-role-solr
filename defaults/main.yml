@@ -34,3 +34,9 @@ solr_restart_handler_enabled: true
 # Used only for Solr < 5.
 solr_log_file_path: /var/log/solr.log
 solr_host: "0.0.0.0"
+
+solr_use_systemd: >
+  {{ (ansible_distribution == 'Ubuntu' and ansible_distribution_version == '16.04') or
+  (ansible_distribution == 'Debian' and ansible_distribution_version|int >= 8) or
+  (ansible_distribution == 'CentOS' and ansible_distribution_major_version|int >= 7) or
+  (ansible_distribution == 'Fedora') }}
