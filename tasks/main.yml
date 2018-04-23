@@ -7,10 +7,10 @@
     solr_filename: "solr-{{ solr_version }}"
   when: "solr_version.split('.')[0] >= '4'"
 
-- name: Set solr_filename for Solr 3.x.
+- name: Set solr_filename for Solr 1.x-3.x.
   set_fact:
     solr_filename: "apache-solr-{{ solr_version }}"
-  when: "solr_version.split('.')[0] == '3'"
+  when: "solr_version.split('.')[0] <= '3'"
 
 - name: Check if Solr has been installed already.
   stat:

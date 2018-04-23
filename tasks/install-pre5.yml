@@ -17,9 +17,13 @@
   when: not solr_war_file.stat.exists
 
 # Set up solr_home.
-- name: Check if solr_home is already set up.
+- name: Check if solr_home is already set up (Solr 3.x+).
   stat: "path={{ solr_home }}/solr.xml"
   register: solr_example
+
+- name: Check if solr_home is already set up (Solr 1.x).
+  stat: "path={{ solr_home }}/conf/solrconfig.xml"
+  register: solr1_example
 
 - name: Ensure solr_home directory exists.
   file:
@@ -28,11 +32,11 @@
     owner: "{{ solr_user }}"
     group: "{{ solr_user }}"
     mode: 0755
-  when: not solr_example.stat.exists
+  when: not (solr_example.stat.exists or solr1_example.stat.exists)
 
 - name: Copy Solr example into solr_home.
   shell: "cp -r {{ solr_install_path }}/example/solr/* {{ solr_home }}"
-  when: not solr_example.stat.exists
+  when: not (solr_example.stat.exists or solr1_example.stat.exists)
 
 - name: Fix the example solrconfig.xml file.
   replace:
@@ -47,7 +51,7 @@
     owner: "{{ solr_user }}"
     group: "{{ solr_user }}"
     recurse: yes
-  when: not solr_example.stat.exists
+  when: not (solr_example.stat.exists or solr1_example.stat.exists)
 
 # Set up Solr init script.
 - name: Ensure log file is created and has proper permissions.
