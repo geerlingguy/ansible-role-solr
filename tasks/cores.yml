@@ -4,6 +4,7 @@
     url: http://{{ solr_connect_host }}:{{ solr_port }}/solr/admin/cores
     return_content: yes
   register: solr_cores_current
+  check_mode: no
 
 - name: Ensure Solr conf directories exist.
   file:
