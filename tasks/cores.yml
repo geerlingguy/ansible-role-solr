@@ -16,15 +16,11 @@
   with_items: "{{ solr_cores }}"
 
 - name: Ensure core configuration directories exist.
-  shell: "cp -r {{ solr_install_path }}/example/files/conf/ {{ solr_home }}/data/{{ item.name }}/"
+  shell: "sudo -u {{ solr_user }} cp -r {{ solr_install_path }}/example/files/conf/ {{ solr_home }}/data/{{ item.name }}/"
   when: "item.name not in solr_cores_current.content"
   with_items: "{{ solr_cores }}"
-  become: yes
-  become_user: "{{ solr_user }}"
 
 - name: Create configured cores.
-  shell: "{{ solr_install_path }}/bin/solr create -c {{ item.name }} -d {{ item.confdir }}"
+  shell: "sudo -u {{ solr_user }} {{ solr_install_path }}/bin/solr create -c {{ item.name }} -d {{ item.confdir }}"
   when: "item.name not in solr_cores_current.content"
   with_items: "{{ solr_cores }}"
-  become: yes
-  become_user: "{{ solr_user }}"
