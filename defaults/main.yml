@@ -28,6 +28,14 @@ solr_cores:
 
 solr_config_file: /etc/default/{{ solr_service_name }}.in.sh
 
+log4j_logger: 'WARN, file'
+log4j_appender_file: 'org.apache.log4j.RollingFileAppender'
+log4j_maxfilesize: 500MB
+log4j_maxbackupindex: 7
+log4j_logpath: '/var/log/solr.log'
+log4j_layout: 'org.apache.log4j.PatternLayout'
+log4j_layout_conversionpattern: '%-5p - %d{yyyy-MM-dd HH:mm:ss.SSS}; %C; %m\n'
+
 # Enable restart solr handler
 solr_restart_handler_enabled: true
 

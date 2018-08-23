@@ -56,3 +56,12 @@
   when: "solr_cores and solr_version.split('.')[0] >= '5'"
 
 - include_tasks: trim-fat.yml
+
+# Create log4j.properties
+- name: create log4j.properties
+  template:
+    src: log4j.properties
+    dest: '{{ solr_home }}/log4j.properties'
+    mode: 0644
+    owner: '{{ solr_user }}'
+    group: '{{ solr_user }}'
