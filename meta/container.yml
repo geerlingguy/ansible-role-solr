@@ -1,3 +1,4 @@
+---
 # See: https://github.com/geerlingguy/solr-container
 solr:
   from: "debian:9"

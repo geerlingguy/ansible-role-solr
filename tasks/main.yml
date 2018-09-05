@@ -1,5 +1,5 @@
 ---
-- import_tasks: user.yml
+- include: user.yml
   when: solr_create_user
 
 - name: Set solr_filename for Solr 4+.
@@ -21,38 +21,29 @@
   get_url:
     url: "{{ solr_mirror }}/lucene/solr/{{ solr_version }}/{{ solr_filename }}.tgz"
     dest: "{{ solr_workspace }}/{{ solr_filename }}.tgz"
-    force: no
+    force: false
   when: solr_install_path_status.stat.isdir is not defined
-  register: solr_download_status
+  notify:
+    - Expand Solr
 
-- name: Expand Solr.
-  unarchive:
-    src: "{{ solr_workspace }}/{{ solr_filename }}.tgz"
-    dest: "{{ solr_workspace }}"
-    copy: no
-  when: solr_download_status.changed
+# beware: we will be firing all handlers as we go (instead of using register)
+- name: Flush Handlers.
+  meta: flush_handlers
 
 # Install Solr < 5.
-- include_tasks: install-pre5.yml
+- include: install-pre5.yml
   when: "solr_version.split('.')[0] < '5'"
 
 # Install Solr 5+.
-- include_tasks: install.yml
+- include: install.yml
   when: "solr_version.split('.')[0] >= '5'"
 
-- name: Ensure solr is started and enabled on boot if configured.
-  service:
-    name: "{{ solr_service_name }}"
-    state: "{{ solr_service_state }}"
-    enabled: yes
-  when: solr_service_manage
-
 # Configure solr.
-- include_tasks: configure.yml
+- include: configure.yml
   when: "solr_version.split('.')[0] >= '5'"
 
 # Create cores, if any are configured.
-- include_tasks: cores.yml
+- include: cores.yml
   when: "solr_cores and solr_version.split('.')[0] >= '5'"
 
-- include_tasks: trim-fat.yml
+- include: trim-fat.yml

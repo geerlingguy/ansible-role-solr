@@ -1,0 +1,11 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    solr_version: "4.9.0"
+  tasks:
+    - name: add curl
+      apt: name=curl state=present
+  roles:
+    - geerlingguy.java
+    - ansible-role-solr

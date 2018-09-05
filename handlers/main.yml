@@ -5,3 +5,34 @@
     state: restarted
     sleep: 5
   when: solr_restart_handler_enabled
+
+- name: Expand Solr
+  unarchive:
+    src: "{{ solr_workspace }}/{{ solr_filename }}.tgz"
+    dest: "{{ solr_workspace }}"
+    copy: false
+
+# Workaround for bug https://github.com/ansible/ansible-modules-core/issues/915.
+- name: Ensure solr is stopped (RHEL 7 workaround).
+  service: name={{ solr_service_name }} state=stopped
+  when: >
+    (ansible_os_family == 'RedHat')
+    and (ansible_distribution_version.split(".")[0] == '7')
+  failed_when: false
+
+- name: Run systemd daemon_reload (RHEL 7 workaround).
+  systemd:
+    name: solr
+    daemon_reload: true
+  when: >
+    (ansible_os_family == 'RedHat')
+    and (ansible_distribution_version.split(".")[0] == '7')
+
+# set this as a handler for idempotency, @see https://github.com/ansible/ansible-modules-core/issues/875
+# which I think still hasn't been fixed (at least on 2.6 I'm using)
+- name: Ensure solr is started and enabled on boot if configured.
+  service:
+    name: "{{ solr_service_name }}"
+    state: "{{ solr_service_state }}"
+    enabled: true
+  when: solr_service_manage

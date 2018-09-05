@@ -6,6 +6,9 @@
     state: absent
   notify: restart solr
 
+- name: Flush Handlers.
+  meta: flush_handlers
+
 - name: Apply Solr configuration changes.
   lineinfile:
     dest: "{{ solr_config_file }}"
@@ -19,4 +22,8 @@
       line: 'SOLR_PORT="{{ solr_port }}"'
     - regexp: "^.?SOLR_TIMEZONE="
       line: 'SOLR_TIMEZONE="{{ solr_timezone }}"'
-  notify: restart solr
+  notify:
+    - restart solr
+
+- name: Flush Handlers.
+  meta: flush_handlers

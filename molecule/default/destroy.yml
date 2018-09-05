@@ -1,0 +1,15 @@
+---
+
+- name: Destroy
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  no_log: "{{ not (lookup('env', 'MOLECULE_DEBUG') | bool or molecule_yml.provisioner.log|default(false) | bool) }}"
+#  tasks:
+#    - name: Destroy molecule instance(s)
+#      lxd_container:
+#        name: "{{ item.name }}"
+#        state: absent
+#        force_stop: "{{ item.force_stop | default(true) }}"
+#      timeout: 6000
+#      with_items: "{{ molecule_yml.platforms }}"
