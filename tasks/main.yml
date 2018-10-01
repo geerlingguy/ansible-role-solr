@@ -31,6 +31,7 @@
     dest: "{{ solr_workspace }}"
     copy: false
   when: solr_download_status.changed
+  tags: ['skip_ansible_lint']
 
 # Install Solr < 5.
 - include_tasks: install-pre5.yml
