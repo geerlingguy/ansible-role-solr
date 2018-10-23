@@ -7,20 +7,18 @@ env:
     - ROLE_NAME: solr
   matrix:
     - MOLECULE_DISTRO: centos7
-      MOLECULE_DOCKER_COMMAND: /usr/lib/systemd/systemd
-    - MOLECULE_DISTRO: ubuntu1604
+    - MOLECULE_DISTRO: ubuntu1804
     - MOLECULE_DISTRO: debian9
     - MOLECULE_DISTRO: debian8
 
     # Solr 6.
     - MOLECULE_DISTRO: centos7
-      MOLECULE_DOCKER_COMMAND: /usr/lib/systemd/systemd
       MOLECULE_PLAYBOOK: playbook-solr-6.yml
     - MOLECULE_DISTRO: debian9
       MOLECULE_PLAYBOOK: playbook-solr-6.yml
 
     # Solr 5.
-    - MOLECULE_DISTRO: ubuntu1404
+    - MOLECULE_DISTRO: ubuntu1604
       MOLECULE_PLAYBOOK: playbook-solr-5.yml
 
     # Solr 4.
@@ -30,7 +28,7 @@ env:
       MOLECULE_PLAYBOOK: playbook-solr-4.yml
 
     # Solr 3.
-    - MOLECULE_DISTRO: ubuntu1404
+    - MOLECULE_DISTRO: ubuntu1604
       MOLECULE_PLAYBOOK: playbook-solr-3.yml
 
 install:
