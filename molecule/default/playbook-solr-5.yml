@@ -7,7 +7,7 @@
     solr_version: "5.5.5"
     solr_remove_cruft: true
     java_packages:
-      - openjdk-7-jdk
+      - openjdk-8-jdk
 
   pre_tasks:
     - name: Update apt cache.
