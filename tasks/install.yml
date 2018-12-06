@@ -27,6 +27,7 @@
     - ansible_distribution_version.split(".")[0] == '7'
     - solr_install_script_result.changed
   failed_when: false
+  tags: ['skip_ansible_lint']
 
 - name: Run systemd daemon_reload (RHEL 7 workaround).
   systemd:
@@ -36,3 +37,4 @@
     - ansible_os_family == 'RedHat'
     - ansible_distribution_version.split(".")[0] == '7'
     - solr_install_script_result.changed
+  tags: ['skip_ansible_lint']
