@@ -34,3 +34,4 @@ solr_restart_handler_enabled: true
 # Used only for Solr < 5.
 solr_log_file_path: /var/log/solr.log
 solr_host: "0.0.0.0"
+solr_opts: ""

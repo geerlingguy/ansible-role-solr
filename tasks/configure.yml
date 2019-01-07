@@ -19,4 +19,6 @@
       line: 'SOLR_PORT="{{ solr_port }}"'
     - regexp: "^.?SOLR_TIMEZONE="
       line: 'SOLR_TIMEZONE="{{ solr_timezone }}"'
+    - regexp: '^SOLR_OPTS="[^"]+" # Ansible managed$'
+      line: 'SOLR_OPTS="$SOLR_OPTS {{ solr_opts }}" # Ansible managed'
   notify: restart solr

@@ -76,6 +76,10 @@ The hostname or IP address on which Solr will be reachable. `localhost` should w
 
 Whether the `restart solr` handler should be used or not. If you're building containers or AMIs, you might need to disable the restart handler for a provisioning run.
 
+    solr_opts="-Dsolr.autoCommit.maxTime=60000"
+
+Pass additional options to solr command line.
+
 ### Variables used only for Solr < 5.
 
 The following variables are currently only applied to installations of Solr 4 and below:
