@@ -1,6 +1,6 @@
 ---
 - import_tasks: user.yml
-  when: solr_create_user
+  when: solr_create_user | bool
 
 - name: Set solr_filename for Solr 4+.
   set_fact:
@@ -30,7 +30,7 @@
     src: "{{ solr_workspace }}/{{ solr_filename }}.tgz"
     dest: "{{ solr_workspace }}"
     copy: false
-  when: solr_download_status.changed
+  when: solr_download_status.changed | bool
   tags: ['skip_ansible_lint']
 
 # Install Solr < 5.
@@ -46,7 +46,7 @@
     name: "{{ solr_service_name }}"
     state: "{{ solr_service_state }}"
     enabled: true
-  when: solr_service_manage
+  when: solr_service_manage | bool
 
 # Configure solr.
 - include_tasks: configure.yml
@@ -54,6 +54,8 @@
 
 # Create cores, if any are configured.
 - include_tasks: cores.yml
-  when: "solr_cores and solr_version.split('.')[0] >= '5'"
+  when:
+    - solr_cores | bool
+    - "solr_version.split('.')[0] >= '5'"
 
 - include_tasks: trim-fat.yml
