@@ -1,6 +1,6 @@
 ---
 - import_tasks: user.yml
-  when: solr_create_user
+  when: solr_create_user|bool
 
 - name: Set solr_filename for Solr 4+.
   set_fact:
