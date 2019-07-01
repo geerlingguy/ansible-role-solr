@@ -56,7 +56,7 @@
     name: "{{ solr_service_name }}"
     state: "{{ solr_service_state }}"
     enabled: yes
-  when: solr_service_manage
+  when: solr_service_manage|bool
 
 # Configure solr.
 - import_tasks: configure.yml

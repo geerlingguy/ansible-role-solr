@@ -11,12 +11,12 @@
   file:
     path: "{{ solr_install_path }}/docs"
     state: absent
-  when: solr_remove_cruft
+  when: solr_remove_cruft|bool
 
 - name: Remove example dir, if not needed.
   file:
     path: "{{ solr_install_path }}/example"
     state: absent
   when:
-    - solr_remove_cruft
+    - solr_remove_cruft|bool
     - solr_version.split('.')[0] >= '5'
