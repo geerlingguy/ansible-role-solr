@@ -8,12 +8,16 @@ env:
   matrix:
     - MOLECULE_DISTRO: centos7
     - MOLECULE_DISTRO: ubuntu1804
-    - MOLECULE_DISTRO: debian9
+    - MOLECULE_DISTRO: debian10
+
+    # Solr 7.
+    - MOLECULE_DISTRO: centos7
+      MOLECULE_PLAYBOOK: playbook-solr-7.yml
+    - MOLECULE_DISTRO: debian10
+      MOLECULE_PLAYBOOK: playbook-solr-7.yml
 
     # Solr 6.
-    - MOLECULE_DISTRO: centos7
-      MOLECULE_PLAYBOOK: playbook-solr-6.yml
-    - MOLECULE_DISTRO: debian9
+    - MOLECULE_DISTRO: ubuntu1604
       MOLECULE_PLAYBOOK: playbook-solr-6.yml
 
     # Solr 5.
@@ -22,8 +26,6 @@ env:
 
     # Solr 4.
     - MOLECULE_DISTRO: ubuntu1604
-      MOLECULE_PLAYBOOK: playbook-solr-4.yml
-    - MOLECULE_DISTRO: ubuntu1404
       MOLECULE_PLAYBOOK: playbook-solr-4.yml
 
     # Solr 3.
