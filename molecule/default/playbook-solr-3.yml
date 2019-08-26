@@ -11,12 +11,6 @@
       apt: update_cache=true cache_valid_time=600
       when: ansible_os_family == "Debian"
 
-    - name: Set Java 8 package for Debian.
-      set_fact:
-        java_packages:
-          - openjdk-8-jdk
-      when: ansible_distribution == "Debian"
-
   roles:
     - role: geerlingguy.java
     - role: geerlingguy.solr
