@@ -10,19 +10,17 @@
           - java-1.8.0-openjdk
       when: ansible_os_family == "RedHat"
 
-    - name: Set Java 8 package for Debian/Ubuntu.
+    - name: Set Java 8 package for Ubuntu.
       set_fact:
         java_packages:
           - openjdk-8-jdk
-      when: ansible_distribution == "Debian"
+      when: ansible_os_family == "Ubuntu"
 
-    - name: Enable Backports repository (Debian).
-      apt_repository:
-        repo: 'deb http://ftp.debian.org/debian {{ ansible_distribution_release }}-backports main'
-        state: present
-        filename: "{{ ansible_distribution_release }}_backports"
-      register: debian_backports
-      when: ansible_distribution == "Debian"
+    - name: Set Java 11 package for Debian.
+      set_fact:
+        java_packages:
+          - openjdk-11-jdk
+      when: ansible_os_family == "Debian"
 
     - name: Update apt cache.
       apt: update_cache=true cache_valid_time=600
@@ -31,9 +29,8 @@
     # See: http://unix.stackexchange.com/a/342469
     - name: Install dependencies (Debian).
       apt:
-        default_release: "{{ ansible_distribution_release }}-backports"
         name:
-          - openjdk-8-jre-headless
+          - openjdk-11-jre-headless
           - ca-certificates-java
         state: present
       when: ansible_distribution == "Debian"
