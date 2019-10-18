@@ -41,16 +41,16 @@
 - include_tasks: install.yml
   when: "solr_version.split('.')[0] >= '5'"
 
+# Configure solr.
+- include_tasks: configure.yml
+  when: "solr_version.split('.')[0] >= '5'"
+
 - name: Ensure solr is started and enabled on boot if configured.
   service:
     name: "{{ solr_service_name }}"
     state: "{{ solr_service_state }}"
     enabled: true
   when: solr_service_manage
-
-# Configure solr.
-- include_tasks: configure.yml
-  when: "solr_version.split('.')[0] >= '5'"
 
 # Create cores, if any are configured.
 - include_tasks: cores.yml
