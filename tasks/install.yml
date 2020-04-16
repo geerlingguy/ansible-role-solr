@@ -16,6 +16,7 @@
     -u {{ solr_user }}
     -s {{ solr_service_name }}
     -p {{ solr_port }}
+    -n
     creates={{ solr_install_path }}/bin/solr
   register: solr_install_script_result
 
