@@ -9,12 +9,11 @@
   when: not solr_war_file.stat.exists
 
 - name: Ensure Solr install files are owned by the solr_user.
-  file:
+  file:  # noqa 208
     path: "{{ solr_install_path }}"
     owner: "{{ solr_user }}"
     group: "{{ solr_user }}"
     recurse: true
-    mode: perserve
   when: not solr_war_file.stat.exists
 
 # Set up solr_home.
