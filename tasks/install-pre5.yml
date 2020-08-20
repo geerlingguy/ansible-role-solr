@@ -14,6 +14,7 @@
     owner: "{{ solr_user }}"
     group: "{{ solr_user }}"
     recurse: true
+    mode: perserve
   when: not solr_war_file.stat.exists
 
 # Set up solr_home.
@@ -39,6 +40,7 @@
     dest: "{{ solr_home }}/collection1/conf/solrconfig.xml"
     regexp: ^.+solr\.install\.dir.+$
     replace: ""
+    mode: 0644
   when: "not solr_example.stat.exists and solr_version.split('.')[0] == '4'"
 
 - name: Ensure Solr home files are owned by the solr_user.
@@ -47,6 +49,7 @@
     owner: "{{ solr_user }}"
     group: "{{ solr_user }}"
     recurse: true
+    mode: preserve
   when: not solr_example.stat.exists
 
 # Set up Solr init script.
