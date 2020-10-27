@@ -1,6 +1,6 @@
 # Ansible Role: Apache Solr
 
-[![Build Status](https://travis-ci.org/geerlingguy/ansible-role-solr.svg?branch=master)](https://travis-ci.org/geerlingguy/ansible-role-solr)
+[![Build Status](https://travis-ci.com/geerlingguy/ansible-role-solr.svg?branch=master)](https://travis-ci.com/geerlingguy/ansible-role-solr)
 
 Installs [Apache Solr](http://lucene.apache.org/solr/) on Linux servers.
 
