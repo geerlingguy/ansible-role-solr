@@ -12,8 +12,8 @@
 - name: Set solr_filename for Solr 3.x.
   set_fact:
     solr_filename: "apache-solr-{{ solr_version }}"
-  when: "solr_version.split('.')[0] == '3'"
-
+  when: ("solr_version.split('.')[0] == '3'") or ("solr_version == '4.0.0'")
+    
 - name: Check if Solr has been installed already.
   stat:
     path: "{{ solr_install_path }}"
