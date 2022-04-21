@@ -9,7 +9,7 @@
     - "solr_version.split('.')[0] >= '4'"
     - "solr_version.split('.')[1] > '0'"
 
-- name: Set solr_filename for Solr 3.x.
+- name: Set solr_filename for Solr 3.x or 4.0.0.
   set_fact:
     solr_filename: "apache-solr-{{ solr_version }}"
   when: ("solr_version.split('.')[0] == '3'") or ("solr_version == '4.0.0'")
