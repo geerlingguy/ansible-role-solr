@@ -5,7 +5,7 @@
 - name: Set solr_filename for Solr 4+.
   set_fact:
     solr_filename: "solr-{{ solr_version }}"
-  when: 
+  when:
     - "solr_version.split('.')[0] >= '4'"
     - "solr_version.split('.')[1] > '0'"
 
