@@ -19,17 +19,17 @@
 
 - name: Set solr_mirror for Solr < 9.
   set_fact:
-    solr_mirror: "{{ solr_mirror }}/lucene"
+    solr_project_mirror: "{{ solr_mirror }}/lucene"
   when: solr_version.split('.')[0]|int < 9
 
 - name: Set solr_mirror for Solr 9+.
   set_fact:
-    solr_mirror: "{{ solr_mirror }}/solr"
+    solr_project_mirror: "{{ solr_mirror }}/solr"
   when: solr_version.split('.')[0]|int >= 9
 
 - name: Download Solr.
   get_url:
-    url: "{{ solr_mirror }}/solr/{{ solr_version }}/{{ solr_filename }}.tgz"
+    url: "{{ solr_project_mirror }}/solr/{{ solr_version }}/{{ solr_filename }}.tgz"
     dest: "{{ solr_workspace }}/{{ solr_filename }}.tgz"
     force: false
   when: solr_install_path_status.stat.isdir is not defined
