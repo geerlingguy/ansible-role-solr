@@ -95,7 +95,7 @@ The hostname or IP address to which Solr will bind. Defaults to `0.0.0.0` which 
 
 ## Dependencies
 
-None.
+jmespath libryary on Ansible controller.
 
 ## Example Playbook
 
