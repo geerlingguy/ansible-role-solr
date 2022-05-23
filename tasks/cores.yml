@@ -14,19 +14,19 @@
     group: "{{ solr_group }}"
     recurse: true
     mode: 0755
-  when: "item not in solr_cores_current.content"
+  when: "item not in solr_cores_current.json | community.general.json_query('status.*.name')"
   with_items: "{{ solr_cores }}"
 
 - name: Ensure core configuration directories exist.
   command: "cp -r {{ solr_install_path }}/example/files/conf/ {{ solr_home }}/data/{{ item }}/"
-  when: "item not in solr_cores_current.content"
+  when: "item not in solr_cores_current.json | community.general.json_query('status.*.name')"
   with_items: "{{ solr_cores }}"
   become: true
   become_user: "{{ solr_user }}"
 
 - name: Create configured cores.
   command: "{{ solr_install_path }}/bin/solr create -c {{ item }} -p {{ solr_port }}"
-  when: "item not in solr_cores_current.content"
+  when: "item not in solr_cores_current.json | community.general.json_query('status.*.name')"
   with_items: "{{ solr_cores }}"
   become: true
   become_user: "{{ solr_user }}"
