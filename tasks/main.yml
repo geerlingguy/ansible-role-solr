@@ -19,7 +19,7 @@
 
 - name: Ensure Solr is already in the requested version.
   stat:
-    path: "{{ solr_install_path }}/{{ solr_filename }}"
+    path: "{{ solr_install_dir }}/{{ solr_filename }}"
   register: solr_application_version
 
 - name: Set solr_mirror for Solr < 9.
