@@ -40,41 +40,41 @@
   when: solr_version.split('.')[0]|int >= 9
 
 - block:
-  - name: Download Solr.
-    get_url:
-      url: "{{ solr_project_mirror }}/solr/{{ solr_version }}/{{ solr_filename }}.tgz"
-      dest: "{{ solr_workspace }}/{{ solr_filename }}.tgz"
-      force: false
-    when: (solr_install_path_status.stat.isdir is not defined) or
-        (not solr_application_version_before_5.stat.exists)
-    register: solr_download_status_before_5
+    - name: Download Solr.
+      get_url:
+        url: "{{ solr_project_mirror }}/solr/{{ solr_version }}/{{ solr_filename }}.tgz"
+        dest: "{{ solr_workspace }}/{{ solr_filename }}.tgz"
+        force: false
+      when: (solr_install_path_status.stat.isdir is not defined) or
+          (not solr_application_version_before_5.stat.exists)
+      register: solr_download_status_before_5
 
-  - name: Expand Solr.
-    unarchive:
-      src: "{{ solr_workspace }}/{{ solr_filename }}.tgz"
-      dest: "{{ solr_workspace }}"
-      copy: false
-    when: solr_download_status_before_5.changed
-    tags: ['skip_ansible_lint']
+    - name: Expand Solr.
+      unarchive:
+        src: "{{ solr_workspace }}/{{ solr_filename }}.tgz"
+        dest: "{{ solr_workspace }}"
+        copy: false
+      when: solr_download_status_before_5.changed
+      tags: ['skip_ansible_lint']
   when: solr_version.split('.')[0]|int < 5
 
 - block:
-  - name: Download Solr.
-    get_url:
-      url: "{{ solr_project_mirror }}/solr/{{ solr_version }}/{{ solr_filename }}.tgz"
-      dest: "{{ solr_workspace }}/{{ solr_filename }}.tgz"
-      force: false
-    when: (solr_install_path_status.stat.isdir is not defined) or
-        (not solr_application_version.stat.exists)
-    register: solr_download_status
+    - name: Download Solr.
+      get_url:
+        url: "{{ solr_project_mirror }}/solr/{{ solr_version }}/{{ solr_filename }}.tgz"
+        dest: "{{ solr_workspace }}/{{ solr_filename }}.tgz"
+        force: false
+      when: (solr_install_path_status.stat.isdir is not defined) or
+          (not solr_application_version.stat.exists)
+      register: solr_download_status
 
-  - name: Expand Solr.
-    unarchive:
-      src: "{{ solr_workspace }}/{{ solr_filename }}.tgz"
-      dest: "{{ solr_workspace }}"
-      copy: false
-    when: solr_download_status.changed
-    tags: ['skip_ansible_lint']
+    - name: Expand Solr.
+      unarchive:
+        src: "{{ solr_workspace }}/{{ solr_filename }}.tgz"
+        dest: "{{ solr_workspace }}"
+        copy: false
+      when: solr_download_status.changed
+      tags: ['skip_ansible_lint']
   when: solr_version.split('.')[0]|int >= 5
 
 # Install Solr < 5.
