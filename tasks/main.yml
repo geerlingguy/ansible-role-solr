@@ -19,8 +19,15 @@
 
 - name: Ensure Solr is already in the requested version.
   stat:
+    path: "{{ solr_install_path }}/{{ solr_filename }}"
+  register: solr_application_version
+  when: solr_version.split('.')[0]|int < 5
+
+- name: Ensure Solr is already in the requested version.
+  stat:
     path: "{{ solr_install_dir }}/{{ solr_filename }}"
   register: solr_application_version
+  when: solr_version.split('.')[0]|int >= 5
 
 - name: Set solr_mirror for Solr < 9.
   set_fact:
