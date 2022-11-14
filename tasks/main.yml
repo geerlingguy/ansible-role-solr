@@ -38,8 +38,8 @@
     dest: "{{ solr_workspace }}/{{ solr_filename }}.tgz"
     force: false
   when:
-    - solr_install_path_status.stat.isdir is not defined
-    - not solr_application_version.stat.exists
+    (solr_install_path_status.stat.isdir is not defined) or
+    (not solr_application_version.stat.exists)
   register: solr_download_status
 
 - name: Expand Solr.
