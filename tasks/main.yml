@@ -17,13 +17,13 @@
     path: "{{ solr_install_path }}"
   register: solr_install_path_status
 
-- name: Ensure Solr is already in the requested version.
+- name: Check if Solr is already in the requested version for versions < 5.
   stat:
-    path: "{{ solr_install_path }}/{{ solr_filename }}"
+    path: "{{ solr_install_path }}/dist/{{ solr_filename }}.war"
   register: solr_application_version_before_5
   when: solr_version.split('.')[0]|int < 5
 
-- name: Ensure Solr is already in the requested version.
+- name: Check if Solr is already in the requested version.
   stat:
     path: "{{ solr_install_dir }}/{{ solr_filename }}"
   register: solr_application_version
@@ -40,7 +40,7 @@
   when: solr_version.split('.')[0]|int >= 9
 
 - block:
-    - name: Download Solr.
+    - name: Download Solr for versions < 5.
       get_url:
         url: "{{ solr_project_mirror }}/solr/{{ solr_version }}/{{ solr_filename }}.tgz"
         dest: "{{ solr_workspace }}/{{ solr_filename }}.tgz"
@@ -49,7 +49,7 @@
           (not solr_application_version_before_5.stat.exists)
       register: solr_download_status_before_5
 
-    - name: Expand Solr.
+    - name: Expand Solr for versions < 5.
       unarchive:
         src: "{{ solr_workspace }}/{{ solr_filename }}.tgz"
         dest: "{{ solr_workspace }}"
