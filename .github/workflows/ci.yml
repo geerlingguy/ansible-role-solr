@@ -42,7 +42,7 @@ jobs:
       matrix:
         include:
           # Solr 8.
-          - distro: centos7
+          - distro: rockylinux8
             playbook: converge.yml
           - distro: ubuntu1804
             playbook: converge.yml
@@ -50,19 +50,19 @@ jobs:
             playbook: converge.yml
 
           # Solr 7.
-          - distro: centos7
+          - distro: rockylinux8
             playbook: solr-7.yml
           - distro: debian10
             playbook: solr-7.yml
 
           # Older versions.
-          - distro: ubuntu1604
+          - distro: ubuntu1804
             playbook: solr-6.yml
-          - distro: ubuntu1604
+          - distro: ubuntu1804
             playbook: solr-5.yml
-          - distro: ubuntu1604
+          - distro: ubuntu1804
             playbook: solr-4.yml
-          - distro: ubuntu1604
+          - distro: ubuntu1804
             playbook: solr-3.yml
 
     steps:
