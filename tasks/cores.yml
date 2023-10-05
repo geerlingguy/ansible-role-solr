@@ -18,7 +18,7 @@
   with_items: "{{ solr_cores }}"
 
 - name: Ensure core configuration directories exist.
-  command: "cp -r {{ solr_install_path }}/example/files/conf/ {{ solr_home }}/data/{{ item }}/"
+  command: "cp -r {{ solr_default_core_path }} {{ solr_home }}/data/{{ item }}/"
   when: "item not in solr_cores_current.content"
   with_items: "{{ solr_cores }}"
   become: true
