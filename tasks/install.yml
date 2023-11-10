@@ -16,7 +16,7 @@
   when:
     - ansible_service_mgr == 'systemd'
     - ansible_os_family == 'RedHat'
-    - ansible_distribution_version.split(".")[0] >= '9'
+    - distribution_major_version >= '9'
 
 - name: Ensure service wrapper is installed for RHEL 7 & 8.
   package:
@@ -27,7 +27,7 @@
   when:
     - ansible_service_mgr == 'systemd'
     - ansible_os_family == 'RedHat'
-    - ansible_distribution_version.split(".")[0] <= '8'
+    - distribution_major_version <= '8'
 
 - name: Ensure service wrapper is installed for Debian-based distributions.
   package:
@@ -57,7 +57,7 @@
   command: service {{ solr_service_name }} stop
   when:
     - ansible_os_family == 'RedHat'
-    - ansible_distribution_version.split(".")[0] >= '7'
+    - distribution_major_version >= '7'
     - solr_install_script_result.changed
   failed_when: false
   tags: ['skip_ansible_lint']
@@ -68,6 +68,6 @@
     daemon_reload: true
   when:
     - ansible_os_family == 'RedHat'
-    - ansible_distribution_version.split(".")[0] >= '7'
+    - distribution_major_version >= '7'
     - solr_install_script_result.changed
   tags: ['skip_ansible_lint']
