@@ -46,25 +46,25 @@ jobs:
             playbook: converge.yml
           - distro: rockylinux8
             playbook: converge.yml
-          - distro: ubuntu1804
+          - distro: ubuntu2204
             playbook: converge.yml
-          - distro: debian10
+          - distro: debian12
             playbook: converge.yml
 
           # Solr 7.
           - distro: rockylinux8
             playbook: solr-7.yml
-          - distro: debian10
+          - distro: debian11
             playbook: solr-7.yml
 
           # Older versions.
-          - distro: ubuntu1804
+          - distro: ubuntu2004
             playbook: solr-6.yml
-          - distro: ubuntu1804
+          - distro: ubuntu2004
             playbook: solr-5.yml
-          - distro: ubuntu1804
+          - distro: ubuntu2004
             playbook: solr-4.yml
-          - distro: ubuntu1804
+          - distro: ubuntu2004
             playbook: solr-3.yml
 
     steps:
