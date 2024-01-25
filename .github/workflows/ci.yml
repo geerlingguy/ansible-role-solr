@@ -48,7 +48,7 @@ jobs:
             playbook: converge.yml
           - distro: ubuntu2204
             playbook: converge.yml
-          - distro: debian12
+          - distro: debian11
             playbook: converge.yml
 
           # Solr 7.
