@@ -51,4 +51,3 @@
     name: solr
     state: restarted
   when: solr_config.changed
-  
