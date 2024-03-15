@@ -1,4 +1,6 @@
+---
 - name: Check for incompatible solr_jetty_host
   fail:
     msg: 'You can set solr_jetty_host other than 127.0.0.1 only when the Solr version is 9.3.0 or higher'
   when: solr_jetty_host != '127.0.0.1' and solr_version is version('9.3.0' ,'<')
+  
