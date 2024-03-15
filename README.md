@@ -53,7 +53,11 @@ The path where local Solr data (search collections and configuration) will be st
 
     solr_port: "8983"
 
-The port on which Solr will run.
+The port on which Solr will run. 
+
+    solr_jetty_host: "127.0.0.1" 
+
+The network interface on which Solr will listen. You can define a value different than 127.0.0.1 just for solr version 9.3.0 and higher.
 
     solr_xms: "256M"
     solr_xmx: "512M"
