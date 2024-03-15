@@ -1,0 +1,32 @@
+---
+- name: Check current list of Solr cores.
+  uri:
+    url: http://{{ solr_jetty_host }}:{{ solr_port }}/solr/admin/cores
+    return_content: true
+  register: solr_cores_current
+  check_mode: false
+
+- name: Ensure Solr conf directories exist.
+  file:
+    path: "{{ solr_home }}/data/{{ item }}/conf"
+    state: directory
+    owner: "{{ solr_user }}"
+    group: "{{ solr_group }}"
+    recurse: true
+    mode: 0755
+  when: "item not in solr_cores_current.content"
+  with_items: "{{ solr_cores }}"
+
+- name: Ensure core configuration directories exist.
+  command: "cp -r {{ solr_default_core_path }} {{ solr_home }}/data/{{ item }}/"
+  when: "item not in solr_cores_current.content"
+  with_items: "{{ solr_cores }}"
+  become: true
+  become_user: "{{ solr_user }}"
+
+- name: Create configured cores.
+  command: "{{ solr_install_path }}/bin/solr create -c {{ item }} -h {{ solr_jetty_host }} -p {{ solr_port }}"
+  when: "item not in solr_cores_current.content"
+  with_items: "{{ solr_cores }}"
+  become: true
+  become_user: "{{ solr_user }}"

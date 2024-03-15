@@ -1,4 +1,6 @@
 ---
+- import_tasks: checks.yml
+
 - import_tasks: user.yml
   when: solr_create_user
 
@@ -64,6 +66,17 @@
 
 # Create cores, if any are configured.
 - include_tasks: cores.yml
-  when: "solr_cores and solr_version.split('.')[0] >= '5'"
+  when: 
+    - solr_cores 
+    - solr_version.split('.')[0] >= '5'
+    - solr_jetty_host == '127.0.0.1'
+
+# Create cores also when solr is listening on custom network interface. Just for solr 9.3.0 and higher.
+- include_tasks: cores-post93.yml
+  when: 
+    - solr_cores 
+    - solr_version is version('9.3.0' ,'>=')
+    - solr_jetty_host != '127.0.0.1'
+
 
 - include_tasks: trim-fat.yml

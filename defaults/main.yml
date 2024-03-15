@@ -18,6 +18,7 @@ solr_install_path: "/opt/{{ solr_service_name }}"
 solr_home: "/var/{{ solr_service_name }}"
 solr_connect_host: localhost
 solr_port: "8983"
+solr_jetty_host: "127.0.0.1"
 
 solr_xms: "256M"
 solr_xmx: "512M"

@@ -23,3 +23,31 @@
     - regexp: "^.?SOLR_OPTS="
       line: 'SOLR_OPTS="{{ solr_opts }}"'
   notify: restart solr
+  when: solr_jetty_host == '127.0.0.1'
+
+- name: Apply Solr configuration changes solr >= 9.3.0.
+  lineinfile:
+    dest: "{{ solr_config_file }}"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+    mode: 0644
+  with_items:
+    - regexp: "^.?SOLR_JAVA_MEM="
+      line: 'SOLR_JAVA_MEM="-Xms{{ solr_xms }} -Xmx{{ solr_xmx }}"'
+    - regexp: "^SOLR_PORT="
+      line: 'SOLR_PORT="{{ solr_port }}"'
+    - regexp: "^.?SOLR_TIMEZONE="
+      line: 'SOLR_TIMEZONE="{{ solr_timezone }}"'
+    - regexp: "^.?SOLR_OPTS="
+      line: 'SOLR_OPTS="{{ solr_opts }}"'
+    - regexp: "^.?SOLR_JETTY_HOST="
+      line: 'SOLR_JETTY_HOST="{{ solr_jetty_host }}"'
+  register: solr_config
+  when: solr_jetty_host != '127.0.0.1'
+
+- name: Restart solr to load new configuration
+  service:
+    name: solr
+    state: restarted
+  when: solr_config.changed
