@@ -1,7 +1,7 @@
 ---
 - name: Converge
   hosts: all
-  become: true
+  #become: true
 
   vars:
     solr_version: "4.10.4"

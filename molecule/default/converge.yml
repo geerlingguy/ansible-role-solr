@@ -1,7 +1,7 @@
 ---
 - name: Converge
   hosts: all
-  become: true
+  #become: true
 
   pre_tasks:
     - name: Set Java 8 package for RedHat.
