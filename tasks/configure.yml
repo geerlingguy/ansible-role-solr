@@ -22,4 +22,10 @@
       line: 'SOLR_TIMEZONE="{{ solr_timezone }}"'
     - regexp: "^.?SOLR_OPTS="
       line: 'SOLR_OPTS="{{ solr_opts }}"'
+    - regexp: "^.?SOLR_MODULES="
+      line: 'SOLR_MODULES="{{ solr_modules }}"'
+    - regexp: "^.?SOLR_IP_ALLOWLIST="
+      line: 'SOLR_IP_ALLOWLIST="{{ solr_ip_allowlist }}"'
+    - regexp: "^.?SOLR_JETTY_HOST="
+      line: 'SOLR_JETTY_HOST="{{ solr_jetty_host }}"'
   notify: restart solr
