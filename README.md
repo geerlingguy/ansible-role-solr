@@ -8,7 +8,7 @@ Installs [Apache Solr](http://lucene.apache.org/solr/) on Linux servers.
 
 Java must be available on the server. You can easily install Java using the `geerlingguy.java` role. Make sure the Java version installed meets the minimum requirements of Solr (e.g. Java 8 for Solr 6+).
 
-This role is currently tested and working with Solr 7.x and 8.x.
+This role is currently tested and working with Solr 7.x and 8.x (Solr 8 is tested with Java 21).
 
 ## Role Variables
 
@@ -71,7 +71,11 @@ Solr options. This option was added to the role in part to mitigate [CVE-2021-44
     solr_cores:
       - collection1
 
-A list of cores / collections which should exist on the server. Each one will be created (if it doesn't exist already) using the default example configuration that ships with Solr.
+A list of cores / collections which should exist on the server. Each one will be created (if it doesn't exist already) using the configuration in `solr_default_core_path`.
+
+    solr_default_core_path: "{{ solr_install_path }}/server/solr/configsets/_default/conf/"
+
+The configuration copied into each new core. For Solr 7+ this defaults to Solr's `_default` configset (for Solr 5 and 6, `example/files/conf/`). Note that the `example/files` configuration uses a JavaScript update processor, which fails on Java 15+ with `No ScriptEngine found` unless the [Nashorn engine](https://solr.apache.org/guide/solr/latest/configuration-guide/script-update-processor.html) jar is added to Solr's `lib` directory.
 
     solr_connect_host: localhost
 

@@ -29,7 +29,9 @@ solr_opts: "$SOLR_OPTS -Dlog4j2.formatMsgNoLookups=true"
 solr_cores:
   - collection1
 
-solr_default_core_path: "{% if solr_version.split('.')[0]|int < 9 %}{{ solr_install_path }}/example/files/conf/{% else %}{{ solr_install_path }}/server/solr/configsets/_default/conf/{% endif %}"
+# Solr 7+ ships a `_default` configset that works on Java 15+ (the older
+# example config requires the Nashorn JavaScript engine, removed in Java 15).
+solr_default_core_path: "{% if solr_version.split('.')[0]|int < 7 %}{{ solr_install_path }}/example/files/conf/{% else %}{{ solr_install_path }}/server/solr/configsets/_default/conf/{% endif %}"
 
 solr_config_file: /etc/default/{{ solr_service_name }}.in.sh
 

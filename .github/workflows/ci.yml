@@ -49,10 +49,8 @@ jobs:
           - distro: debian13
             playbook: converge.yml
 
-          # Solr 7.
-          - distro: rockylinux10
-            playbook: solr-7.yml
-          - distro: debian13
+          # Solr 7 (requires Java 8, not available on newer distros).
+          - distro: ubuntu2204
             playbook: solr-7.yml
 
     steps:

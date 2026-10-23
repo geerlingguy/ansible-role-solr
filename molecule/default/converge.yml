@@ -10,16 +10,10 @@
           - java-21-openjdk
       when: ansible_facts.os_family == "RedHat"
 
-    - name: Set Java 17 package for Ubuntu.
+    - name: Set Java 21 package for Debian/Ubuntu.
       set_fact:
         java_packages:
-          - openjdk-17-jdk
-      when: ansible_facts.os_family == "Ubuntu"
-
-    - name: Set Java 17 package for Debian.
-      set_fact:
-        java_packages:
-          - openjdk-17-jdk
+          - openjdk-21-jdk-headless
       when: ansible_facts.os_family == "Debian"
 
     - name: Update apt cache.
@@ -27,15 +21,6 @@
         update_cache: true
         cache_valid_time: 600
       when: ansible_facts.os_family == "Debian"
-
-    # See: http://unix.stackexchange.com/a/342469
-    - name: Install dependencies (Debian).
-      apt:
-        name:
-          - openjdk-11-jre-headless
-          - ca-certificates-java
-        state: present
-      when: ansible_facts.distribution == "Debian"
 
   roles:
     - role: geerlingguy.java
