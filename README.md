@@ -6,9 +6,9 @@ Installs [Apache Solr](http://lucene.apache.org/solr/) on Linux servers.
 
 ## Requirements
 
-Java must be available on the server. You can easily install Java using the `geerlingguy.java` role. Make sure the Java version installed meets the minimum requirements of Solr (e.g. Java 8 for Solr 6+).
+Java must be available on the server. You can easily install Java using the `geerlingguy.java` role. Make sure the Java version installed meets the minimum requirements of Solr (e.g. Java 11+ for Solr 9, Java 8 for Solr 6-8).
 
-This role is currently tested and working with Solr 7.x and 8.x (Solr 8 is tested with Java 21).
+This role is currently tested and working with Solr 7.x, 8.x, and 9.x (Solr 8 and 9 are tested with Java 21).
 
 ## Role Variables
 
@@ -24,9 +24,11 @@ Files will be downloaded to this path on the remote server before being moved in
 
 Solr will be run under the `solr_user`. Set `solr_create_user` to `false` if `solr_user` is created before this role runs, or if you're using Solr 5+ and want Solr's own installation script to set up the user. By default, `solr_group` equals `solr_user`, but it can be overwritten to fit your own configuration.
 
-    solr_version: "8.11.2"
+    solr_version: "9.11.0"
 
-The Apache Solr version to install. For a full list, see [available Apache Solr versions](http://archive.apache.org/dist/lucene/solr/).
+The Apache Solr version to install. For a full list, see available Apache Solr versions for [Solr 9+](https://archive.apache.org/dist/solr/solr/) and [Solr 8 and earlier](https://archive.apache.org/dist/lucene/solr/).
+
+Note that starting with Solr 9, Solr only listens on `127.0.0.1` by default. To make it reachable from other hosts, add `-Djetty.host=0.0.0.0` (or a specific IP) to `solr_opts`, and make sure access is properly secured.
 
     solr_mirror: "https://archive.apache.org/dist"
 
