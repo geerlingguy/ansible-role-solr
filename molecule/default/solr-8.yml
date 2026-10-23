@@ -1,0 +1,28 @@
+---
+- name: Converge
+  hosts: all
+  #become: true
+
+  vars:
+    solr_version: "8.11.4"
+
+  pre_tasks:
+    - name: Set Java 21 package for RedHat.
+      set_fact:
+        java_packages:
+          - java-21-openjdk
+      when: ansible_facts.os_family == "RedHat"
+
+    - name: Set Java 21 package for Debian/Ubuntu.
+      set_fact:
+        java_packages:
+          - openjdk-21-jdk-headless
+      when: ansible_facts.os_family == "Debian"
+
+    - name: Update apt cache.
+      apt: update_cache=true cache_valid_time=600
+      when: ansible_facts.os_family == "Debian"
+
+  roles:
+    - role: geerlingguy.java
+    - role: geerlingguy.solr

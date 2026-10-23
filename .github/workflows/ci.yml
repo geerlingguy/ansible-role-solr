@@ -41,13 +41,17 @@ jobs:
     strategy:
       matrix:
         include:
-          # Solr 8.
+          # Solr 9 (default).
           - distro: rockylinux10
             playbook: converge.yml
           - distro: ubuntu2404
             playbook: converge.yml
           - distro: debian13
             playbook: converge.yml
+
+          # Solr 8.
+          - distro: ubuntu2404
+            playbook: solr-8.yml
 
           # Solr 7 (requires Java 8, not available on newer distros).
           - distro: ubuntu2204
