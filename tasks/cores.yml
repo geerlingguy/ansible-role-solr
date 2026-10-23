@@ -1,4 +1,10 @@
 ---
+- name: Wait for Solr to be available.
+  wait_for:
+    host: "{{ solr_connect_host }}"
+    port: "{{ solr_port }}"
+    timeout: 120
+
 - name: Check current list of Solr cores.
   uri:
     url: http://{{ solr_connect_host }}:{{ solr_port }}/solr/admin/cores
